@@ -1,92 +1,80 @@
 <template>
-  <div>
-    <div class="container">
-      <div class="row">
-        <div class="col s12 m8 offset-m2">
-          <div class="login card-panel grey lighten-4 black-text center">
-            <h3>Register</h3>
-            <form action="index.html">
-              <div class="input-field">
-                <input type="email" id="email" v-model="email" />
-                <label for="email">Email Address</label>
-              </div>
-              <div class="input-field">
-                <input type="password" id="password" v-model="password" />
-                <label for="password">Password</label>
-              </div>
-              <button
-                v-on:click="register"
-                class="btn btn-large btn-extended grey lighten-4 black-text"
-              >Register</button>
-            </form>
-          </div>   
-        </div>
-     
-      </div>
-    </div>
-       <button   v-on:click="randomFunkcija">Crazy</button>
+  <div data-app>
+    <ul>
+      <li><router-link to="/register">Register</router-link></li>
+      <li><router-link to="/login">Login</router-link></li>
+      <li><router-link to="/">Home</router-link></li>
+    </ul>
+
+    <form>
+      <v-text-field v-model="name" :counter="10" label="Name"></v-text-field>
+      <v-text-field
+        type="password"
+        v-model="password"
+        label="Password"
+      ></v-text-field>
+      <v-text-field v-model="email" label="E-mail"></v-text-field>
+      <v-select :items="items" v-model="gender" :value="items"></v-select>
+
+      <v-btn class="mr-4" @click="register">Register</v-btn>
+    </form>
   </div>
 </template>
 
 <script>
 import firebase from "../firebase/firebaseInit";
-
 import User from "../classes/User";
+import { mapActions } from "vuex";
 export default {
   name: "register",
+
   data() {
     return {
+      items: ["Male", "Female"],
       email: "",
       password: "",
-      gender: "male",
-      user_id:null,
-      username: "Test",
-      registerData: null
+      gender: null,
+      user_id: null,
+      name: "",
+      registerData: null,
     };
   },
 
-mounted(){
- 
- User.dispatch('collectId')
-  
-},
-created(){
-
-
-
- return this.user_id = User.getters('getId')
-}
-  
-,
+  created() {
+    User.dispatch("collectId");
+  },
+  computed: {
+    getId() {
+      return User.getters("getId");
+    },
+  },
 
   methods: {
- 
-
-    randomFunkcija(){
-
-      console.log(this.user_id)
-    },
-
+       ...mapActions([
+      
+    ] ),
     register: function(e) {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(
           () => {
-            
-            //User.dispatch('addUser', registerData)
+            User.dispatch("addUser", {
+              user_id: this.getId,
+              name: this.name,
+              email: this.email,
+              gender: this.gender,
+            });
 
-            //this.$router.go({ path: this.$router.path });
+            this.$router.push("/login");
           },
-          err => {
+          (err) => {
             alert(err.message);
           }
         );
 
-
       e.preventDefault();
-    }
+    },
   },
-
 };
 </script>
