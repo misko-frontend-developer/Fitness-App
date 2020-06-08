@@ -1,10 +1,6 @@
 <template>
   <div>
-    <ul>
-      <li><router-link to="/register">Register</router-link></li>
-      <li><router-link to="/login">Login</router-link></li>
-      <li><router-link to="/">Home</router-link></li>
-    </ul>
+    <Navigation />
     <div class="container">
       <div class="row">
         <div class="col s12 m8 offset-m2">
@@ -25,9 +21,7 @@
               >
                 Login
               </button>
-           
             </form>
-            <Alert/>
           </div>
         </div>
       </div>
@@ -38,7 +32,8 @@
 <script>
 import firebase from "../firebase/firebaseInit";
 import User from "../classes/User";
-import Alert from "./Alerts";
+
+import Navigation from "../components/Nav";
 export default {
   data() {
     return {
@@ -46,9 +41,8 @@ export default {
       password: null,
     };
   },
-  components:{
-    Alert
-
+  components: {
+    Navigation,
   },
   methods: {
     login: function(e) {
@@ -60,15 +54,29 @@ export default {
             User.dispatch("authEmail", user.email);
 
             if (this.email == "admin@admin.com") {
-              alert(`You are logged in as ${this.email}`);
+              //alert(`You are logged in as ${this.email}`);
+              Toast.fire({
+                icon: "success",
+                title: `You are logged in as ${this.email}`,
+              });
+
               this.$router.push("/admin");
             } else {
-              alert(`You are logged in as ${this.email}`);
+              // alert(`You are logged in as ${this.email}`);
+              Toast.fire({
+                icon: "success",
+                title: `You are logged in as ${this.email}`,
+              });
+
               this.$router.push("/user");
             }
           },
           (err) => {
             alert(err.message);
+            Toast.fire({
+              icon: "error",
+              title: `${err.message}`,
+            });
           }
         );
       e.preventDefault();

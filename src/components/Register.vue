@@ -1,10 +1,6 @@
 <template>
   <div data-app>
-    <ul>
-      <li><router-link to="/register">Register</router-link></li>
-      <li><router-link to="/login">Login</router-link></li>
-      <li><router-link to="/">Home</router-link></li>
-    </ul>
+    <Navigation />
 
     <form>
       <v-text-field v-model="name" :counter="10" label="Name"></v-text-field>
@@ -24,6 +20,7 @@
 <script>
 import firebase from "../firebase/firebaseInit";
 import User from "../classes/User";
+import Navigation from "../components/Nav";
 import { mapActions } from "vuex";
 export default {
   name: "register",
@@ -39,7 +36,9 @@ export default {
       registerData: null,
     };
   },
-
+  components: {
+    Navigation,
+  },
   created() {
     User.dispatch("collectId");
   },
@@ -50,9 +49,6 @@ export default {
   },
 
   methods: {
-       ...mapActions([
-      
-    ] ),
     register: function(e) {
       firebase
         .auth()
@@ -69,7 +65,11 @@ export default {
             this.$router.push("/login");
           },
           (err) => {
-            alert(err.message);
+          
+             Toast.fire({
+              icon: "error",
+              title: `${err.message}`,
+            });
           }
         );
 

@@ -68,7 +68,7 @@ export default {
       isEditing: true,
     };
   },
-  computed: {},
+
   mounted() {
     this.name = User.getters("currentUserGetter")[0].name;
     this.email = User.getters("currentUserGetter")[0].email;
@@ -77,14 +77,43 @@ export default {
 
   methods: {
     deleteAccount() {
-      confirm("Do you want to delete your account? ");
-      User.dispatch("deleteUser");
+     // confirm("Do you want to delete your account? ");
+
+swalWithBootstrapButtons.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it!',
+  cancelButtonText: 'No, cancel!',
+  reverseButtons: true
+}).then((result) => {
+  if (result.value) {
+  
+    swalWithBootstrapButtons.fire(
+      User.dispatch("deleteUser"),
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+    )
+
+  } else if (
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelled',
+      'Your imaginary file is safe :)',
+      'error'
+    )
+  }
+})
+
+   
     },
     editUser() {
       this.isEditing = !this.isEditing;
         let obj = { name: this.name, email: this.email , gender :this.gender};
        User.dispatch("editUserName", obj);
-      console.log(this.gender);
     },
   },
 };

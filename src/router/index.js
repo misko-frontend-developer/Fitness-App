@@ -5,8 +5,10 @@ import Login from "../components/Login";
 import Admin from "../components/Admin";
 import User from "../components/User";
 import Home from "../components/Home";
-
+import NotFound from '../components/NotFound'
 import UsersPanel from "../components/admin/UsersPanel";
+import Scheduler from "../components/admin/Scheduler";
+import Intensity from "../components/admin/Intensity";
 import Welcome from "../components/admin/Welcome";
 import UserSettings from "../components/user/UserSettings";
 import firebase from "../firebase/firebaseInit";
@@ -64,6 +66,18 @@ let router = new Router({
           beforeEnter: checkAdminRights,
           component: UsersPanel,
         },
+        {
+          path: "scheduler",
+          name: "scheduler",
+          beforeEnter: checkAdminRights,
+          component: Scheduler,
+        },
+        {
+          path: "intensity",
+          name: "intensity",
+          beforeEnter: checkAdminRights,
+          component: Intensity,
+        },
       ],
     },
     {
@@ -80,6 +94,11 @@ let router = new Router({
           component: UserSettings,
         },
       ],
+    },
+    {
+      path: "*",
+      name: "notFound",
+      component: NotFound,
     },
   ],
 });

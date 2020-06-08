@@ -31,23 +31,28 @@
                 </v-list-item-title>
               </v-list-item-content>
             </template>
-            <v-list-item v-for="(child, i) in item.children" :key="i" :to="item.link"  link>
-              <v-list-item-action v-if="child.icon"  >
+            <v-list-item
+              v-for="(child, i) in item.children"
+              :key="i"
+              :to="item.link"
+              link
+            >
+              <v-list-item-action v-if="child.icon">
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title >
-                  {{ child.text }} 
+                <v-list-item-title>
+                  {{ child.text }}
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
           <v-list-item v-else :key="item.text" :to="item.link" link>
-            <v-list-item-action >
+            <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title >
+              <v-list-item-title>
                 {{ item.text }}
               </v-list-item-title>
             </v-list-item-content>
@@ -72,21 +77,22 @@
         <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-content> 
-      <v-container  fluid>
-            <router-view :key="$route.fullPath" />
+    <v-content>
+      <v-container fluid>
+        <router-view :key="$route.fullPath" />
       </v-container>
     </v-content>
 
     <v-dialog v-model="dialog" width="800px"> </v-dialog>
+    <Alert />
   </v-app>
 </template>
 
 <script>
-import firebase from '../firebase/firebaseInit'
+import firebase from "../firebase/firebaseInit";
+
 export default {
   methods: {
-   
     logout: function() {
       firebase
         .auth()
@@ -103,10 +109,12 @@ export default {
     dialog: false,
     drawer: null,
     items: [
-      { icon: "mdi-home", text: "Home", link:"/user" },
-      { icon: "mdi-contacts", text: "Profile Settings", link:"/user/settings" },
-     
-    
+      { icon: "mdi-home", text: "Home", link: "/user" },
+      {
+        icon: "mdi-contacts",
+        text: "Profile Settings",
+        link: "/user/settings",
+      },
     ],
   }),
 };

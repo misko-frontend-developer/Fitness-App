@@ -98,7 +98,7 @@ export default {
                     doc.ref.delete();
                   });
                 });
-              alert("your account is deleted");
+             
               router.push("/login");
             });
         })

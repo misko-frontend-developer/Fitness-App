@@ -105,15 +105,18 @@ export default {
     items: [
       { icon: "mdi-home", text: "Home", link:"/admin/" },
       { icon: "mdi-contacts", text: "Users", link:"/admin/userspanel" },
-      { icon: "mdi-chart-areaspline", text: "Stats", link:"" },
-      { icon: "mdi-calendar", text: "Scheduler", link:"" },
+      { icon: "mdi-chart-pie", text: "Stats", link:"" },
+      { icon: "mdi-calendar", text: "Scheduler", link:"/admin/scheduler" },
+      { icon: "mdi-chart-areaspline", text: "Intensity", link:"/admin/intensity" },
+      
       {
         icon: "mdi-chevron-up",
         "icon-alt": "mdi-chevron-down",
         text: "More",
         model: true,
         children: [{ icon: "mdi-run-fast", text: "Excersises" },
-                  { icon: "mdi-food", text: "Meal Plans" }],
+                  { icon: "mdi-food", text: "Meal Plans" },
+                  ],
       },
     
     ],
