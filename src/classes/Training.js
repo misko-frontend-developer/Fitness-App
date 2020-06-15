@@ -18,11 +18,10 @@ export default class Training extends Model{
             test : this.attr(null)*/
             id:this.attr(null),
             name : this.attr(null),
-            details : this.attr(null),
-            user_id: this.attr(null),
             color: this.attr(null),
             start: this.attr(null),
             end: this.attr(null),
+            details : this.attr(null),
           
 
 

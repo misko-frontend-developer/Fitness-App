@@ -1,72 +1,93 @@
 <template>
-
   <v-row class="fill-height">
- 
     <v-col>
       <v-sheet height="64">
         <v-toolbar flat color="white">
-           <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-      <template v-slot:activator="{ on }">
-        <v-btn color="primary" dark v-on="on" @click="testFunkcija">Open Dialog</v-btn>
-      </template>
-      <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click="dialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>Add New Training</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark text @click="dialog = false">Save</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <v-container >
-          <v-row  justify="space-around">
-          <v-col cols="3">
-            <v-subheader>Choose User</v-subheader>
-            <multiselect v-model="selectedUser" :class="customClass"  :options="availableUsers"></multiselect>
-          </v-col>
-         
-          <v-col cols="3">
-             <v-subheader>Choose Meal Plan</v-subheader>
-            <multiselect v-model="selectedMealPlan" :class="customClass"  :options="availableMealPlans"></multiselect>
-          </v-col>
-        </v-row>
+          <v-dialog
+            v-model="dialog"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                class="mx-3"
+                dark
+                v-on="on"
+                @click="loadDatainNew"
+                >Add Training</v-btn
+              >
+            </template>
+            <v-card>
+              <v-toolbar dark color="primary">
+                <v-btn icon dark @click="dialog = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title>Add New Training</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                  <v-btn dark text @click="saveTrainingData">Save</v-btn>
+                </v-toolbar-items>
+              </v-toolbar>
+              <v-container>
+                <v-row justify="space-around">
+                  
+                  <v-col cols="3">
+                    <v-subheader>Choose User</v-subheader>
+                    <multiselect
+                      v-model="selectedUser"
+                   
+                      :options="availableUsers"
+                    ></multiselect>
+                    <div>{{ selectedUser }}</div>
 
-        </v-container>
-        <v-divider></v-divider>
-        <v-list three-line subheader>
-          <v-subheader>General</v-subheader>
-          <v-list-item>
-            <v-list-item-action>
-              <v-checkbox v-model="notifications"></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Notifications</v-list-item-title>
-              <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-action>
-              <v-checkbox v-model="sound"></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Sound</v-list-item-title>
-              <v-list-item-subtitle>Auto-update apps at any time. Data charges may apply</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-action>
-              <v-checkbox v-model="widgets"></v-checkbox>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Auto-add widgets</v-list-item-title>
-              <v-list-item-subtitle>Automatically add home screen widgets</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-card>
-    </v-dialog>
+                    <v-subheader>Choose Intensity </v-subheader>
+                    <multiselect
+                      v-model="selectedIntensity"
+                     
+                      :options="availableIntesity"
+                    ></multiselect>
+                    <div>{{ selectedIntensity }}</div>
+
+                    <v-subheader>Choose Meal Plan</v-subheader>
+                    <multiselect
+                      v-model="selectedMealPlan"
+                       
+                      :options="availableMealPlans"
+                    ></multiselect>
+                    <div>{{ selectedMealPlan }}</div>
+
+                    <v-subheader>Choose Excercises</v-subheader>
+                    <multiselect
+                      v-model="selectedExcercise"
+                       
+                      :options="availableExcercises"
+                      :multiple="true"
+                    ></multiselect>
+                    <div>{{ selectedExcercise }}</div>
+                    <v-subheader>Choose Color </v-subheader>
+                    <v-color-picker
+                      v-model="color"
+                      hide-inputs
+                      hide-mode-switch
+                    ></v-color-picker>
+                  </v-col>
+                  <v-col cols="7">
+                    <v-subheader>Choose Date </v-subheader>
+                 
+                    <v-date-picker
+                      v-model="dateTraining"
+                      full-width
+                      :landscape="$vuetify.breakpoint.smAndUp"
+                      class="mt-4"
+                    ></v-date-picker>
+                  </v-col>
+                </v-row>
+              </v-container>
+              <v-row class="mx-5"> </v-row>
+            </v-card>
+          </v-dialog>
           <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
             Today
           </v-btn>
@@ -79,13 +100,8 @@
           <v-toolbar-title>{{ title }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-menu bottom right>
-            
             <template v-slot:activator="{ on }">
-              <v-btn
-                outlined
-                color="grey darken-2"
-                v-on="on"
-              >
+              <v-btn outlined color="grey darken-2" v-on="on">
                 <span>{{ typeToLabel[type] }}</span>
                 <v-icon right>mdi-menu-down</v-icon>
               </v-btn>
@@ -127,41 +143,138 @@
           :activator="selectedElement"
           offset-x
         >
-          <v-card
-            color="grey lighten-4"
-            min-width="350px"
-            flat
-          >
-            <v-toolbar
-              :color="selectedEvent.color"
-              dark
-            >
-              <v-btn icon>
-                <v-icon>mdi-pencil</v-icon>
+          <v-card color="grey lighten-4" min-width="400px" flat>
+            <v-toolbar :color="selectedEvent.color" dark>
+              <v-btn icon @click="markDone(selectedEvent)">
+                <v-icon>mdi-checkbox-marked-circle</v-icon>
               </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               <v-spacer></v-spacer>
+
+              <v-dialog
+                v-model="dialogEdit"
+                fullscreen
+                hide-overlay
+                transition="dialog-bottom-transition"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on" @click="loadDatainNew(); bindDataEdit(selectedEvent);">
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-toolbar dark color="primary">
+                    <v-btn icon dark @click="dialogEdit = false">
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                    <v-toolbar-title>Edit Training</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                      <v-btn dark text @click="saveEditsData(selectedEvent)">Save Edits</v-btn>
+                    </v-toolbar-items>
+                  </v-toolbar>
+                          <v-container>
+                <v-row justify="space-around">
+                  
+                  <v-col cols="3">
+                    <v-subheader>Choose User</v-subheader>
+                    <multiselect
+                      v-model="editSelectedUser"
+                       
+                      :options="availableUsers"
+                  
+                    ></multiselect>
+                    <div>{{ editSelectedUser }}</div>
+
+                    <v-subheader>Choose Intensity </v-subheader>
+                    <multiselect
+                      v-model="editSelectedIntensity"
+                       
+                      :options="availableIntesity"
+                    ></multiselect>
+                    <div>{{ editSelectedIntensity }}</div>
+
+                    <v-subheader>Choose Meal Plan</v-subheader>
+                    <multiselect
+                      v-model="editSelectedMealPlan"
+                       
+                      :options="availableMealPlans"
+                    ></multiselect>
+                    <div>{{ editSelectedMealPlan }}</div>
+
+                    <v-subheader>Choose Excercises</v-subheader>
+                    <multiselect
+                      v-model="editSelectedExcercise"
+                       
+                      :options="availableExcercises"
+                      :multiple="true"
+                    ></multiselect>
+                    <div>{{ editSelectedExcercise }}</div>
+                    <v-subheader>Choose Color </v-subheader>
+                    <v-color-picker
+                      v-model="editColor"
+                      hide-inputs
+                      hide-mode-switch
+                    ></v-color-picker>
+                  </v-col>
+                  <v-col cols="7">
+                    <v-row>
+                        <v-subheader class="mr-5">Choose Date </v-subheader>
+                    </v-row>
+                    <v-date-picker
+                      v-model="date2"
+                      full-width
+                      :landscape="$vuetify.breakpoint.smAndUp"
+                      class="mt-4"
+                    ></v-date-picker>
+                  </v-col>
+                </v-row>
+              </v-container>
               
+                </v-card>
+              </v-dialog>
               <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
+                <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-toolbar>
-          <v-card-text>
-          
-              <h3 v-html="selectedEvent.details"></h3>
-              <span >
-                
-              </span>
+            <v-card-text>
+              <v-row no-gutters>
+                <v-col cols="4">
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-title>Done :</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-title>Excercises :</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-title>Meal Plan :</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                      <v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-title>Intensity:</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  
+                </v-col>
+                <v-col cols="8">
+                  <div v-for="event in selectedEvent.details" :key="event.id">
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-list-item-title>{{ event }}</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </div>
+                </v-col>
+              </v-row>
             </v-card-text>
             <v-card-actions>
-              <v-btn
-                text
-                color="secondary"
-                @click="selectedOpen = false"
-              >
+              <v-btn text color="secondary" @click="selectedOpen = false">
                 Cancel
               </v-btn>
             </v-card-actions>
@@ -170,29 +283,27 @@
       </v-sheet>
     </v-col>
   </v-row>
-
 </template>
 
-
 <script>
-import Training from "../../classes/Training"
-import Exercise from "../../classes/Exercise"
-import MealPlans from "../../classes/MealPlans"
-import User from "../../classes/User"
+import Training from "../../classes/Training";
+import Exercise from "../../classes/Exercise";
+import MealPlans from "../../classes/MealPlans";
+import User from "../../classes/User";
+import Intensity from "../../classes/Intensity";
 
 export default {
-
-async beforeRouteEnter(to, from, next) {
- 
- 
-await Promise.all([Training.dispatch("getTrainings"),
-MealPlans.dispatch("getMealPlans"),
- Exercise.dispatch("getExcercises"),
-  User.dispatch("getUsers")]).then(()=>{
-   next();
- })
- 
-},
+  async beforeRouteEnter(to, from, next) {
+    await Promise.all([
+      Intensity.dispatch("getIntensity"),
+      Training.dispatch("getTrainings"),
+      MealPlans.dispatch("getMealPlans"),
+      Exercise.dispatch("getExcercises"),
+      User.dispatch("getUsers"),
+    ]).then(() => {
+      next();
+    });
+  },
   data: () => ({
     today: new Date().toISOString().substr(0, 10),
     focus: new Date().toISOString().substr(0, 10),
@@ -204,20 +315,40 @@ MealPlans.dispatch("getMealPlans"),
       day: "Day",
       "4day": "4 Days",
     },
+    //Models for Edit 
+      editSelectedUser: null,
+      editSelectedMealPlan: null,
+      editSelectedExcercise: [],
+      editSelectedIntensity: null,
+      date2: '2020-06-14',
+      editColor: null,
+      editDone:false ,
+    //Models for new User Entry
+
+    selectedUser: null,
+    selectedMealPlan: null,
+    selectedExcercise: [],
+    selectedIntensity: null,
+    availableIntesity: [],
+    availableExcercises: [],
+    availableUsers: [],
+    availableMealPlans: [],
+    dateTraining: null,
+
+    //Vuetify Calendar data
+
+    dialogEdit: false,
     dialog: false,
     notifications: false,
     sound: true,
     widgets: false,
-    selectedUser: null,
-    selectedMealPlan :null,
-    availableUsers: [],
-    availableMealPlans :['MealPlan1', 'MealPlan2', 'MealPlan3'],
     name: null,
     details: null,
     start: null,
     end: null,
     test: null,
-    color: "#1976D2",
+    color: null,
+    done: false,
     currentlyEditing: null,
     selectedEvent: {},
     selectedElement: null,
@@ -234,66 +365,154 @@ MealPlans.dispatch("getMealPlans"),
       });
     },
   },
-  mounted(){
-
+  mounted() {
     this.collectTrainings();
-     
-   
   },
 
   methods: {
-    testFunkcija(){
+    markDone(data){
+      data.details.done =!data.details.done
+      console.log(data.details.done)
+      Training.dispatch('changeStatus',{done:data.details.done, id: data.id})
+    },
 
-        let users =[];
-        let excer = [];
-        let meal_plan = []
+    saveTrainingData() {
+      let obj = {
+        id: Training.getters("getTrainingId"),
+        color: this.color.hex,
+        start: this.dateTraining,
+        end: this.dateTraining,
+        name: this.selectedUser,
+        details: {
+          done: this.done,
+          excercises: this.selectedExcercise,
+          intensity_id: this.selectedIntensity,
+          meal_plan_id: this.selectedMealPlan,
+          user_id: this.selectedUser,
+        },
+      };
 
-       User.all().forEach(user=>{
-        users.push(user.name)
-      })
+      Training.dispatch("addNewTrainng", obj);
+
+      this.collectTrainings();
+
+      this.dialog = false;
+    },
+    bindDataEdit(eventData){
+    
+      this.editSelectedUser = eventData.name
+      this.editSelectedIntensity = eventData.details.intensity
+      this.editSelectedMealPlan = eventData.details.mealplans
+      this.editSelectedExcercise = eventData.details.excercises
+      this.editColor=eventData.color
+      this.date2 = eventData.start
+      this.editDone = eventData.details.done
+
+    
+      
+
+   
+
+    },
+    saveEditsData(eventData){
+  let obj = {
+        id:eventData.id,
+        color  :this.editColor,
+        start: this.date2,
+        end: this.date2,
+        name :  this.editSelectedUser,
+        details:{
+          done:this.editDone,
+          excercises:this.editSelectedExcercise,
+          intensity_id: this.editSelectedIntensity,
+          meal_plan_id : this.editSelectedMealPlan,
+          user_id: this.editSelectedUser
+        },
+        
+      }
+    Training.dispatch('updateTraining',obj).then( this.collectTrainings())
+    this.dialogEdit = false;
+    this.selectedOpen= false;
+     
+
+      
+   
+
+    },
+    loadDatainNew() {
+      let users = [];
+      let excer = [];
+      let meal_plan = [];
+      let intensity = [];
+      Training.dispatch("collectTrainingId");
+
+      User.all().forEach((user) => {
+        users.push(` ${user.name} - [${user.user_id}]`);
+      });
       this.availableUsers = users;
 
-     
+      MealPlans.all().forEach((meal) => {
+        meal_plan.push(` ${meal.name} - [${meal.id}]`);
+      });
+
+      this.availableMealPlans = meal_plan;
+
+      Intensity.all().forEach((intens) => {
+        intensity.push(` ${intens.name} - [${intens.id}]`);
+      });
+      this.availableIntesity = intensity;
+
+      Exercise.all().forEach((exc) => {
+        excer.push(` ${exc.title} - [${exc.id}]`);
+      });
+      this.availableExcercises = excer;
     },
-    collectTrainings(){
-
-      let trainings = Training.all()
+    collectTrainings() {
+      let trainings = Training.all();
       let newArray = [];
-      let excerArray = [];
       
-      trainings.forEach(training =>{
 
-          Exercise.query().whereIdIn( training.details.excecises).get().forEach((element)=>{
-          
-             excerArray.push(element.title)
+      trainings.forEach((training) => {
+        let excerArray = [];
+        Exercise.query()
+          .whereIdIn(training.details.excercises)
+          .get()
+          .forEach((element) => {
+            excerArray.push(`${element.title} - [${element.id}]`);
+          });
 
-          })
-      
-      let obj = {
-        name : User.query().where('user_id', training.details.user_id).get()[0].name,
-        color: training.color,
-        start: training.start,
-        end : training.end,
-        details: { 
-          done : training.details.done,
-          exicecses: excerArray,
-          mealplans: MealPlans.query().where('id', training.details.meal_plan_id).get()
-         }
+        let intesArray = [];
+        Intensity.query()
+          .where("id", training.details.intensity_id)
+          .get()
+          .forEach((element) => {
+            intesArray.push(`${element.name} - [${element.id}]`)
+         
+           } )
+
+        let obj = {
+          id:training.id,
+          name: User.query()
+            .where("user_id", training.details.user_id)
+            .get()[0].name + ` [${ training.details.user_id}]`,
+          color: training.color,
+          start: training.start,
+          end: training.end,
+          details: {
+            done: training.details.done,
+            excercises: excerArray,
+            mealplans: MealPlans.query()
+              .where("id", training.details.meal_plan_id)
+              .get()[0].name + ` [${ training.details.meal_plan_id}]`,
+            intensity: intesArray[0]
+          },
+        };
         
 
-          
-      }
+        newArray.push(obj);
+      });
 
-        newArray.push(obj)
-          
-        
-      
-      })
-    
-        
-          this.events = newArray
-  
-
+      this.events = newArray;
     },
     viewDay({ date }) {
       this.focus = date;
@@ -360,7 +579,10 @@ MealPlans.dispatch("getMealPlans"),
   },
 };
 </script>
-<style >
-.multiselect__element{ 
-   color: blue;
-    }</style>
+<style>
+.multiselect__element {
+  color: blue;
+}
+.custom-class {
+}
+</style>

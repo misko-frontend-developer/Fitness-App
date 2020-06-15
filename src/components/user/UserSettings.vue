@@ -93,7 +93,7 @@ swalWithBootstrapButtons.fire({
     swalWithBootstrapButtons.fire(
       User.dispatch("deleteUser"),
       'Deleted!',
-      'Your file has been deleted.',
+      'Your account has been deleted.',
       'success'
     )
 
@@ -102,7 +102,7 @@ swalWithBootstrapButtons.fire({
   ) {
     swalWithBootstrapButtons.fire(
       'Cancelled',
-      'Your imaginary file is safe :)',
+      'Your profile is safe :)',
       'error'
     )
   }

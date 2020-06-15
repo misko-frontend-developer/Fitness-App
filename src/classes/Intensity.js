@@ -13,7 +13,9 @@ export default class Intensity extends Model{
             id: this.attr(null),
             sets : this.attr(null),
             reps: this.attr(null),
-            name: this.attr(null)
+            name: this.attr(null),
+            color: this.attr(null),
+            break: this.attr(null)
 
 
         }

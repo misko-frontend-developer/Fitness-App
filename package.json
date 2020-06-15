@@ -9,6 +9,8 @@
   "dependencies": {
     "@smartweb/vue-flash-message": "^0.6.4",
     "@vuex-orm/core": "^0.36.3",
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.4",
     "firebase": "^7.14.2",
     "firebase-admin": "^8.11.0",
