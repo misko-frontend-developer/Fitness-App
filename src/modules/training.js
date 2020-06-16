@@ -1,14 +1,15 @@
 import db from "../firebase/firebaseInit";
 import Training from "../classes/Training";
+
 export default {
   state: {
     tranings: null,
     latestTrainingId: null,
-    testObj :{}
-   
+    testObj: {},
   },
   actions: {
-   async objectGenerator({commit},obj) {
+    // GENRATOR FOR OBJECT ADJUST VALUES TO IDS FOR BASE
+    async objectGenerator({ commit }, obj) {
       let excercises_ids = [];
 
       obj.details.excercises.forEach((element) => {
@@ -50,9 +51,11 @@ export default {
           ),
         },
       };
-      
-    await commit('testMutation',objUpdate)
+
+      await commit("testMutation", objUpdate);
     },
+
+    //GET ALL TRAINING DATA
     async getTrainings() {
       let data = [];
       await db
@@ -67,10 +70,11 @@ export default {
           Training.create({ data: data });
         });
     },
-    async updateTraining({ commit }, obj) {
 
-      Training.dispatch('objectGenerator',obj);
-      let adjustedObj = Training.getters('testGetter')
+    //UPDATE TRAINING DATA
+    async updateTraining({ commit }, obj) {
+      Training.dispatch("objectGenerator", obj);
+      let adjustedObj = Training.getters("testGetter");
 
       await db
         .firestore()
@@ -90,35 +94,88 @@ export default {
           });
         })
         .then(
-          Training.update({
-            where: obj.id,
+          Training.insert({
             data: [
               {
-              done:adjustedObj.details.done
+                id: adjustedObj.id,
+                name: adjustedObj.name,
+                color: adjustedObj.color,
+                start: adjustedObj.start,
+                end: adjustedObj.end,
+                details: adjustedObj.details,
               },
             ],
           })
         );
     },
-    async changeStatus({ commit }, data) {
+    //CHANGE STATUS, TO DONE OR NOT
+    async changeStatus({ commit }, obj) {
+      let update_excercises = [];
+      console.log(obj);
+      obj.details.excercises.forEach((element) => {
+        let id = parseInt(
+          element
+            .split("[")
+            .pop()
+            .split("]")[0]
+        );
+        update_excercises.push(id);
+      });
+
       await db
         .firestore()
         .collection("training")
-        .where("id", "==", data.id)
+        .where("id", "==", obj.id)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             doc.ref.update({
-              id: objUpdate.id,
-              color: objUpdate.color,
-              start: objUpdate.start,
-              end: objUpdate.end,
-              name: objUpdate.name,
-              details: objUpdate.details,
+              details: {
+                done: obj.details.done,
+                excercises: update_excercises,
+                intensity_id: parseInt(
+                  obj.details.intensity_id
+                    .split("[")
+                    .pop()
+                    .split("]")[0]
+                ),
+                meal_plan_id: parseInt(
+                  obj.details.meal_plan_id
+                    .split("[")
+                    .pop()
+                    .split("]")[0]
+                ),
+                user_id: parseInt(
+                  obj.name
+                    .split("[")
+                    .pop()
+                    .split("]")[0]
+                ),
+              },
             });
           });
         });
+      Training.update({
+        where: obj.id,
+        data: obj,
+      });
     },
+
+    async deleteTraining({ commit }, id) {
+      console.log(id);
+      await db
+        .firestore()
+        .collection("training")
+        .where("id", "==", id)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            doc.ref.delete();
+          });
+        })
+        .then(Training.delete(id));
+    },
+    //COLLECT LATEST TRAINING ID FROM FIREBASE
     async collectTrainingId({ commit }) {
       let arrayID = [];
       await db
@@ -136,27 +193,25 @@ export default {
 
       commit("setTrainingId", idIncrement);
     },
+
+    // ADD NEW TRAINING
     async addNewTrainng({ commit }, obj) {
+      Training.dispatch("objectGenerator", obj);
+      let adjustedObj = Training.getters("testGetter");
 
-
-      Training.dispatch('objectGenerator',obj);
-      let adjustedObj = Training.getters('testGetter')
-    
       await db
         .firestore()
         .collection("training")
         .add(adjustedObj)
         .then(Training.insert({ data: [adjustedObj] }));
     },
-   
   },
   getters: {
     getTrainingId: (state) => state.latestTrainingId,
-    testGetter :(state)=> state.testObj
+    testGetter: (state) => state.testObj,
   },
   mutations: {
     setTrainingId: (state, id) => (state.latestTrainingId = id),
-    testMutation :(state, obj) =>(state.testObj = obj)
-    
-  }
-}
+    testMutation: (state, obj) => (state.testObj = obj),
+  },
+};

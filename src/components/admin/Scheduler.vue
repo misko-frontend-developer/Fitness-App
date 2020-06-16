@@ -32,12 +32,10 @@
               </v-toolbar>
               <v-container>
                 <v-row justify="space-around">
-                  
                   <v-col cols="3">
                     <v-subheader>Choose User</v-subheader>
                     <multiselect
                       v-model="selectedUser"
-                   
                       :options="availableUsers"
                     ></multiselect>
                     <div>{{ selectedUser }}</div>
@@ -45,7 +43,6 @@
                     <v-subheader>Choose Intensity </v-subheader>
                     <multiselect
                       v-model="selectedIntensity"
-                     
                       :options="availableIntesity"
                     ></multiselect>
                     <div>{{ selectedIntensity }}</div>
@@ -53,7 +50,6 @@
                     <v-subheader>Choose Meal Plan</v-subheader>
                     <multiselect
                       v-model="selectedMealPlan"
-                       
                       :options="availableMealPlans"
                     ></multiselect>
                     <div>{{ selectedMealPlan }}</div>
@@ -61,7 +57,6 @@
                     <v-subheader>Choose Excercises</v-subheader>
                     <multiselect
                       v-model="selectedExcercise"
-                       
                       :options="availableExcercises"
                       :multiple="true"
                     ></multiselect>
@@ -75,7 +70,7 @@
                   </v-col>
                   <v-col cols="7">
                     <v-subheader>Choose Date </v-subheader>
-                 
+
                     <v-date-picker
                       v-model="dateTraining"
                       full-width
@@ -158,7 +153,15 @@
                 transition="dialog-bottom-transition"
               >
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on" @click="loadDatainNew(); bindDataEdit(selectedEvent);">
+                  <v-btn
+                    icon
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="
+                      loadDatainNew();
+                      bindDataEdit(selectedEvent);
+                    "
+                  >
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
                 </template>
@@ -170,70 +173,65 @@
                     <v-toolbar-title>Edit Training</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                      <v-btn dark text @click="saveEditsData(selectedEvent)">Save Edits</v-btn>
+                      <v-btn dark text @click="saveEditsData(selectedEvent)"
+                        >Save Edits</v-btn
+                      >
                     </v-toolbar-items>
                   </v-toolbar>
-                          <v-container>
-                <v-row justify="space-around">
-                  
-                  <v-col cols="3">
-                    <v-subheader>Choose User</v-subheader>
-                    <multiselect
-                      v-model="editSelectedUser"
-                       
-                      :options="availableUsers"
-                  
-                    ></multiselect>
-                    <div>{{ editSelectedUser }}</div>
+                  <v-container>
+                    <v-row justify="space-around">
+                      <v-col cols="3">
+                        <v-subheader>Choose User</v-subheader>
+                        <multiselect
+                          v-model="editSelectedUser"
+                          :options="availableUsers"
+                        ></multiselect>
+                        <div>{{ editSelectedUser }}</div>
 
-                    <v-subheader>Choose Intensity </v-subheader>
-                    <multiselect
-                      v-model="editSelectedIntensity"
-                       
-                      :options="availableIntesity"
-                    ></multiselect>
-                    <div>{{ editSelectedIntensity }}</div>
+                        <v-subheader>Choose Intensity </v-subheader>
+                        <multiselect
+                          v-model="editSelectedIntensity"
+                          :options="availableIntesity"
+                        ></multiselect>
+                        <div>{{ editSelectedIntensity }}</div>
 
-                    <v-subheader>Choose Meal Plan</v-subheader>
-                    <multiselect
-                      v-model="editSelectedMealPlan"
-                       
-                      :options="availableMealPlans"
-                    ></multiselect>
-                    <div>{{ editSelectedMealPlan }}</div>
+                        <v-subheader>Choose Meal Plan</v-subheader>
+                        <multiselect
+                          v-model="editSelectedMealPlan"
+                          :options="availableMealPlans"
+                        ></multiselect>
+                        <div>{{ editSelectedMealPlan }}</div>
 
-                    <v-subheader>Choose Excercises</v-subheader>
-                    <multiselect
-                      v-model="editSelectedExcercise"
-                       
-                      :options="availableExcercises"
-                      :multiple="true"
-                    ></multiselect>
-                    <div>{{ editSelectedExcercise }}</div>
-                    <v-subheader>Choose Color </v-subheader>
-                    <v-color-picker
-                      v-model="editColor"
-                      hide-inputs
-                      hide-mode-switch
-                    ></v-color-picker>
-                  </v-col>
-                  <v-col cols="7">
-                    <v-row>
-                        <v-subheader class="mr-5">Choose Date </v-subheader>
+                        <v-subheader>Choose Excercises</v-subheader>
+                        <multiselect
+                          v-model="editSelectedExcercise"
+                          :options="availableExcercises"
+                          :multiple="true"
+                        ></multiselect>
+                        <div>{{ editSelectedExcercise }}</div>
+                        <v-subheader>Choose Color </v-subheader>
+                        <v-color-picker
+                          v-model="editColor"
+                          hide-inputs
+                          hide-mode-switch
+                        ></v-color-picker>
+                      </v-col>
+                      <v-col cols="7">
+                        <v-row>
+                          <v-subheader class="mr-5">Choose Date </v-subheader>
+                        </v-row>
+                        <v-date-picker
+                          v-model="date2"
+                          full-width
+                          :landscape="$vuetify.breakpoint.smAndUp"
+                          class="mt-4"
+                        ></v-date-picker>
+                      </v-col>
                     </v-row>
-                    <v-date-picker
-                      v-model="date2"
-                      full-width
-                      :landscape="$vuetify.breakpoint.smAndUp"
-                      class="mt-4"
-                    ></v-date-picker>
-                  </v-col>
-                </v-row>
-              </v-container>
-              
+                  </v-container>
                 </v-card>
               </v-dialog>
-              <v-btn icon>
+              <v-btn @click="deleteTraining(selectedEvent)" icon>
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-toolbar>
@@ -255,12 +253,11 @@
                       <v-list-item-title>Meal Plan :</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                      <v-list-item>
+                  <v-list-item>
                     <v-list-item-content>
                       <v-list-item-title>Intensity:</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  
                 </v-col>
                 <v-col cols="8">
                   <div v-for="event in selectedEvent.details" :key="event.id">
@@ -315,14 +312,14 @@ export default {
       day: "Day",
       "4day": "4 Days",
     },
-    //Models for Edit 
-      editSelectedUser: null,
-      editSelectedMealPlan: null,
-      editSelectedExcercise: [],
-      editSelectedIntensity: null,
-      date2: '2020-06-14',
-      editColor: null,
-      editDone:false ,
+    //Models for Edit
+    editSelectedUser: null,
+    editSelectedMealPlan: null,
+    editSelectedExcercise: [],
+    editSelectedIntensity: null,
+    date2: "2020-06-14",
+    editColor: null,
+    editDone: false,
     //Models for new User Entry
 
     selectedUser: null,
@@ -370,75 +367,161 @@ export default {
   },
 
   methods: {
-    markDone(data){
-      data.details.done =!data.details.done
-      console.log(data.details.done)
-      Training.dispatch('changeStatus',{done:data.details.done, id: data.id})
-    },
-
-    saveTrainingData() {
+    //MARK TRAINING DONE
+    markDone(data) {
       let obj = {
-        id: Training.getters("getTrainingId"),
-        color: this.color.hex,
-        start: this.dateTraining,
-        end: this.dateTraining,
-        name: this.selectedUser,
+        id: data.id,
+        color: data.color,
+        start: data.start,
+        end: data.end,
+        name: data.name,
         details: {
-          done: this.done,
-          excercises: this.selectedExcercise,
-          intensity_id: this.selectedIntensity,
-          meal_plan_id: this.selectedMealPlan,
-          user_id: this.selectedUser,
+          done: (data.details.done = !data.details.done),
+          excercises: data.details.excercises,
+          intensity_id: data.details.intensity,
+          meal_plan_id: data.details.mealplans,
         },
       };
 
-      Training.dispatch("addNewTrainng", obj);
-
+      Training.dispatch("changeStatus", obj);
       this.collectTrainings();
-
-      this.dialog = false;
     },
-    bindDataEdit(eventData){
-    
-      this.editSelectedUser = eventData.name
-      this.editSelectedIntensity = eventData.details.intensity
-      this.editSelectedMealPlan = eventData.details.mealplans
-      this.editSelectedExcercise = eventData.details.excercises
-      this.editColor=eventData.color
-      this.date2 = eventData.start
-      this.editDone = eventData.details.done
 
-    
-      
-
-   
-
+    deleteTraining(id) {
+      swalWithBootstrapButtons
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, cancel!",
+          reverseButtons: true,
+        })
+        .then((result) => {
+          if (result.value) {
+            Training.dispatch("deleteTraining", id.id);
+            this.collectTrainings();
+            this.selectedOpen = false;
+            swalWithBootstrapButtons.fire(
+              "Deleted!",
+              "Your Training has been deleted.",
+              "success"
+            );
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire(
+              "Cancelled",
+              "We didnt delete it!",
+              "error"
+            );
+          }
+        });
     },
-    saveEditsData(eventData){
-  let obj = {
-        id:eventData.id,
-        color  :this.editColor,
-        start: this.date2,
-        end: this.date2,
-        name :  this.editSelectedUser,
-        details:{
-          done:this.editDone,
-          excercises:this.editSelectedExcercise,
-          intensity_id: this.editSelectedIntensity,
-          meal_plan_id : this.editSelectedMealPlan,
-          user_id: this.editSelectedUser
-        },
-        
+    // SAVE NEW TRAINING IN DATABASE
+    saveTrainingData() {
+      if (
+        this.selectedExcercise.length !== 0 &&
+        this.dateTraining !== null &&
+        this.selectedUser !== null &&
+        this.selectedIntensity !== null &&
+        this.selectedMealPlan !== null
+      ) {
+        let obj = {
+          id: Training.getters("getTrainingId"),
+          color: this.color.hex,
+          start: this.dateTraining,
+          end: this.dateTraining,
+          name: this.selectedUser,
+          details: {
+            done: this.done,
+            excercises: this.selectedExcercise,
+            intensity_id: this.selectedIntensity,
+            meal_plan_id: this.selectedMealPlan,
+            user_id: this.selectedUser,
+          },
+        };
+
+        Training.dispatch("addNewTrainng", obj);
+
+        this.collectTrainings();
+
+        this.dialog = false;
+        Toast.fire({
+          icon: "success",
+          title: "New Training added",
+        });
+      } else {
+        Toast.fire({
+          icon: "warning",
+          title: "Please enter all data",
+        });
       }
-    Training.dispatch('updateTraining',obj).then( this.collectTrainings())
-    this.dialogEdit = false;
-    this.selectedOpen= false;
-     
-
-      
-   
-
     },
+
+    // BIND DATA IN FIELDS FOR EDIT
+    bindDataEdit(eventData) {
+      this.editSelectedUser = eventData.name;
+      this.editSelectedIntensity = eventData.details.intensity;
+      this.editSelectedMealPlan = eventData.details.mealplans;
+      this.editSelectedExcercise = eventData.details.excercises;
+      this.editColor = eventData.color;
+      this.date2 = eventData.start;
+      this.editDone = eventData.details.done;
+    },
+
+    //SAVE DATA ON ADD NEW TRAINING
+    saveEditsData(eventData) {
+      if (
+        this.editSelectedExcercise.length !== 0 &&
+        this.date2 !== null &&
+        this.editSelectedUser !== null &&
+        this.editSelectedIntensity !== null &&
+        this.editSelectedMealPlan !== null
+      ) {
+        let obj = {
+          id: eventData.id,
+          color: this.editColor,
+          start: this.date2,
+          end: this.date2,
+          name: this.editSelectedUser,
+          details: {
+            done: this.editDone,
+            excercises: this.editSelectedExcercise,
+            intensity_id: this.editSelectedIntensity,
+            meal_plan_id: this.editSelectedMealPlan,
+            user_id: this.editSelectedUser,
+          },
+        };
+
+        Training.dispatch("updateTraining", obj);
+
+        this.collectTrainings();
+
+        let upDetails = {
+          done: this.editDone,
+          excercises: this.editSelectedExcercise,
+          intensity_id: this.editSelectedIntensity,
+          meal_plan_id: this.editSelectedMealPlan,
+        };
+
+        this.selectedEvent.details = upDetails;
+
+        this.dialogEdit = false;
+        this.selectedOpen = false;
+
+        Toast.fire({
+          icon: "success",
+          title: "Details are edited",
+        });
+      } else {
+        Toast.fire({
+          icon: "warning",
+          title: "Please enter all data",
+        });
+      }
+    },
+
+    //LOAD DATA IN ON ADD NEW TRAINING - FIELD VALUES
     loadDatainNew() {
       let users = [];
       let excer = [];
@@ -467,10 +550,13 @@ export default {
       });
       this.availableExcercises = excer;
     },
+
+    // COLLECT ALL TRAINING DATA ON LOAD
     collectTrainings() {
       let trainings = Training.all();
       let newArray = [];
-      
+
+      let doneData;
 
       trainings.forEach((training) => {
         let excerArray = [];
@@ -486,28 +572,28 @@ export default {
           .where("id", training.details.intensity_id)
           .get()
           .forEach((element) => {
-            intesArray.push(`${element.name} - [${element.id}]`)
-         
-           } )
+            intesArray.push(`${element.name} - [${element.id}]`);
+          });
 
         let obj = {
-          id:training.id,
-          name: User.query()
-            .where("user_id", training.details.user_id)
-            .get()[0].name + ` [${ training.details.user_id}]`,
+          id: training.id,
+          name:
+            User.query()
+              .where("user_id", training.details.user_id)
+              .get()[0].name + ` [${training.details.user_id}]`,
           color: training.color,
           start: training.start,
           end: training.end,
           details: {
             done: training.details.done,
             excercises: excerArray,
-            mealplans: MealPlans.query()
-              .where("id", training.details.meal_plan_id)
-              .get()[0].name + ` [${ training.details.meal_plan_id}]`,
-            intensity: intesArray[0]
+            mealplans:
+              MealPlans.query()
+                .where("id", training.details.meal_plan_id)
+                .get()[0].name + ` [${training.details.meal_plan_id}]`,
+            intensity: intesArray[0],
           },
         };
-        
 
         newArray.push(obj);
       });
