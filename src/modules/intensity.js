@@ -32,7 +32,7 @@ export default {
             doc.ref.delete();
           });
 
-          console.log("user deleted");
+   
           Intensity.delete(id);
         });
     },

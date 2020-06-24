@@ -111,7 +111,6 @@ export default {
     //CHANGE STATUS, TO DONE OR NOT
     async changeStatus({ commit }, obj) {
       let update_excercises = [];
-      console.log(obj);
       obj.details.excercises.forEach((element) => {
         let id = parseInt(
           element
@@ -160,9 +159,9 @@ export default {
         data: obj,
       });
     },
-
+//DELETE TRAINING FROM FIREBASE 
     async deleteTraining({ commit }, id) {
-      console.log(id);
+     
       await db
         .firestore()
         .collection("training")

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Multiselect from 'vue-multiselect'
 import VuexORM from '@vuex-orm/core'
+import VuexORMSearch from '@vuex-orm/plugin-search'
+import VueResource from 'vue-resource'
 import user from '../modules/users'
 import User from '../classes/User'
 import training from '../modules/training'
@@ -15,8 +17,16 @@ import Intensity from '../classes/Intensity'
 import Swal from 'sweetalert2'
 
 
-  // register globally
-  Vue.component('multiselect', Multiselect)
+
+Vue.component('multiselect', Multiselect)
+Vue.use(Vuex)
+Vue.use(VueResource)
+VuexORM.use(VuexORMSearch, {
+  
+  threshold: 0,
+  minMatchCharLength:5})  
+
+Vue.http.options.root ='https://api.spoonacular.com/mealplanner/generate?'
 
 //Alerting global properties 
 
@@ -46,8 +56,6 @@ window.Toast = Toast;
 window.swalWithBootstrapButtons = swalWithBootstrapButtons;
 
 
-Vue.use(Vuex)
-Vue.component('multiselect', Multiselect)
 
 
 const database = new VuexORM.Database()

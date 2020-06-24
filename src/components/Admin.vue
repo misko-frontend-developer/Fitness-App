@@ -22,7 +22,6 @@
             :key="item.text"
             v-model="item.model"
             :prepend-icon="item.model ? item.icon : item['icon-alt']"
-            append-icon=""
           >
             <template v-slot:activator>
               <v-list-item-content>
@@ -31,23 +30,28 @@
                 </v-list-item-title>
               </v-list-item-content>
             </template>
-            <v-list-item v-for="(child, i) in item.children" :key="i" :to="item.link"  link>
-              <v-list-item-action v-if="child.icon"  >
+            <v-list-item
+              v-for="(child, i) in item.children"
+              :key="i"
+              :to="item.link"
+              link
+            >
+              <v-list-item-action v-if="child.icon">
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title >
-                  {{ child.text }} 
+                <v-list-item-title>
+                  {{ child.text }}
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
           <v-list-item v-else :key="item.text" :to="item.link" link>
-            <v-list-item-action >
+            <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title >
+              <v-list-item-title>
                 {{ item.text }}
               </v-list-item-title>
             </v-list-item-content>
@@ -72,9 +76,9 @@
         <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-content> 
-      <v-container  fluid>
-            <router-view />
+    <v-content>
+      <v-container fluid>
+        <router-view />
       </v-container>
     </v-content>
 
@@ -83,10 +87,58 @@
 </template>
 
 <script>
-import firebase from '../firebase/firebaseInit'
-export default {
-  methods: {
+import firebase from "../firebase/firebaseInit";
 
+import MealPlans from "../classes/MealPlans";
+export default {
+  //Before update, check for children component to save data in Add Meal Plan
+
+  beforeRouteUpdate(to, from, next) {
+    const getterState = MealPlans.getters("getMealPlansAPI");
+
+    const obj2 = JSON.stringify(getterState);
+    const obj3 = JSON.parse(obj2);
+
+    if (from.fullPath == "/admin/add-meal-plan") {
+      if (Object.keys(obj3).length !== 0 && obj3.constructor === Object) {
+        swalWithBootstrapButtons
+          .fire({
+            title: "Saved all interesting plans?",
+            text:
+              " Unsaved plans will be lost, you won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, all saved!",
+            cancelButtonText: "No, just a minute!",
+            reverseButtons: true,
+          })
+          .then((result) => {
+            if (result.value) {
+              MealPlans.dispatch("emptyState");
+
+              swalWithBootstrapButtons.fire(
+                "All set!",
+                "Your data is visible in Meal Plans.",
+                "success"
+              );
+              next();
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              swalWithBootstrapButtons.fire(
+                "Cancelled",
+                "No problem, take your time!",
+                "success"
+              );
+            }
+          });
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  },
+
+  methods: {
     logout: function() {
       firebase
         .auth()
@@ -103,22 +155,21 @@ export default {
     dialog: false,
     drawer: null,
     items: [
-      { icon: "mdi-home", text: "Home", link:"/admin/" },
-      { icon: "mdi-contacts", text: "Users", link:"/admin/userspanel" },
-      { icon: "mdi-chart-pie", text: "Stats", link:"" },
-      { icon: "mdi-calendar", text: "Scheduler", link:"/admin/scheduler" },
-      { icon: "mdi-chart-areaspline", text: "Intensity", link:"/admin/intensity" },
-      
+      { icon: "mdi-home", text: "Home", link: "/admin/" },
+      { icon: "mdi-chart-pie", text: "Stats", link: "" },
+      { icon: "mdi-contacts", text: "Users", link: "/admin/userspanel" },
+      { icon: "mdi-calendar", text: "Scheduler", link: "/admin/scheduler" },
       {
-        icon: "mdi-chevron-up",
-        "icon-alt": "mdi-chevron-down",
-        text: "More",
-        model: true,
-        children: [{ icon: "mdi-run-fast", text: "Excersises" },
-                  { icon: "mdi-food", text: "Meal Plans" },
-                  ],
+        icon: "mdi-chart-areaspline",
+        text: "Intensity",
+        link: "/admin/intensity",
       },
-    
+      {
+        icon: "mdi-nutrition",
+        text: "Add New Meal Plan",
+        link: "/admin/add-meal-plan",
+      },
+      { icon: "mdi-food", text: "Meal Plans", link: "/admin/meal-plans" },
     ],
   }),
 };

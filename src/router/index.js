@@ -10,8 +10,11 @@ import UsersPanel from "../components/admin/UsersPanel";
 import Scheduler from "../components/admin/Scheduler";
 import Intensity from "../components/admin/Intensity";
 import Welcome from "../components/admin/Welcome";
+import MealPlansView from "../components/admin/MealPlansView";
+import AddMealPlan from "../components/admin/AddMealPlan";
 import UserSettings from "../components/user/UserSettings";
 import firebase from "../firebase/firebaseInit";
+
 
 //import store from "../store";
 
@@ -52,6 +55,7 @@ let router = new Router({
       path: "/admin",
       name: "Admin",
       beforeEnter: checkAdminRights,
+   
       component: Admin,
       children: [
         {
@@ -78,6 +82,20 @@ let router = new Router({
           beforeEnter: checkAdminRights,
           component: Intensity,
         },
+        {
+          path: "meal-plans",
+          name: "MealPlansView",
+          beforeEnter: checkAdminRights,
+          component: MealPlansView,
+          
+        },
+        {
+          path: "add-meal-plan",
+          name: "AddMealPlan",
+          beforeEnter: checkAdminRights,
+          component: AddMealPlan,
+          
+        },
       ],
     },
     {
@@ -90,7 +108,6 @@ let router = new Router({
           path: "settings",
           name: "usersettings",
           beforeEnter: checkUserRights,
-          
           component: UserSettings,
         },
       ],
@@ -103,7 +120,7 @@ let router = new Router({
   ],
 });
 
-
+  
 
 function checkUserRights(to, from, next) {
   let current = firebase.auth().currentUser.email;
