@@ -1,16 +1,17 @@
 <template>
   <v-container>
-    <v-container class=" mt-s4 d-flex flex-row align-end justify-space-around ">
-      
-        <v-col cols="4" class="mt-12">
-          <h4>Search saved recepies</h4>
-
+    <v-container class=" mt-s4  mb-5 d-flex flex-row align-end justify-space-between ">
+    
+        <v-col cols="3" class="mt-12">
+            <v-row>
+         <h4>Search saved recepies</h4>
+      </v-row>
           <v-text-field @keyup="searchOpt" v-model="search">
             <v-icon slot="append" color="primary">mdi-magnify</v-icon>
           </v-text-field>
         </v-col>
         <v-col cols="4">
-          <img width="250" :src="require('../../photos/diet2.svg')" alt="" />
+          <img width="200" :src="require('../../photos/diet2.svg')" alt="" />
         </v-col>
  
     </v-container>

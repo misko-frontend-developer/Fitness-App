@@ -14,13 +14,19 @@ import exercise from '../modules/excercise'
 import Exercise from '../classes/Exercise'
 import intensity from '../modules/intensity'
 import Intensity from '../classes/Intensity'
+
+import VueYouTubeEmbed from 'vue-youtube-embed'
 import Swal from 'sweetalert2'
+
+
 
 
 
 Vue.component('multiselect', Multiselect)
 Vue.use(Vuex)
 Vue.use(VueResource)
+Vue.use(VueYouTubeEmbed, { global: true, componentId: "youtube-media" })
+
 VuexORM.use(VuexORMSearch, {
   
   threshold: 0,

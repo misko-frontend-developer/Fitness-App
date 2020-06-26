@@ -1,5 +1,5 @@
 import {Model} from '@vuex-orm/core'
-
+import User from '../classes/User'
 
 export default class Training extends Model{
 
@@ -17,6 +17,9 @@ export default class Training extends Model{
             start: this.attr(null),
             end: this.attr(null),
             details : this.attr(null),
+
+
+            user: this.belongsTo(User,'user_id')
           
 
 

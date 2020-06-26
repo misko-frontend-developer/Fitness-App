@@ -13,7 +13,8 @@ export default class Excercise extends Model{
             id: this.attr(null),
             title : this.attr(null),
             video: this.attr(null),
-            desc: this.attr(null)
+            desc: this.attr(null),
+            group:this.attr(null),
 
 
         }

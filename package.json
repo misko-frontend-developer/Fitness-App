@@ -10,6 +10,7 @@
     "@smartweb/vue-flash-message": "^0.6.4",
     "@vuex-orm/core": "^0.36.3",
     "@vuex-orm/plugin-search": "^0.24.1",
+    "apexcharts": "^3.19.2",
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.4",
@@ -20,6 +21,7 @@
     "vue-multiselect": "^2.1.6",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.1.6",
+    "vue-youtube-embed": "^2.2.2",
     "vuelidate": "^0.7.5",
     "vuetify": "^2.2.27",
     "vuex": "^3.3.0"

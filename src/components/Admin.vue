@@ -155,8 +155,8 @@ export default {
     dialog: false,
     drawer: null,
     items: [
-      { icon: "mdi-home", text: "Home", link: "/admin/" },
-      { icon: "mdi-chart-pie", text: "Stats", link: "" },
+      { icon: "mdi-home", text: "Home", link: "/admin" },
+      { icon: "mdi-chart-pie", text: "Stats", link: "/admin/stats" },
       { icon: "mdi-contacts", text: "Users", link: "/admin/userspanel" },
       { icon: "mdi-calendar", text: "Scheduler", link: "/admin/scheduler" },
       {
@@ -170,6 +170,7 @@ export default {
         link: "/admin/add-meal-plan",
       },
       { icon: "mdi-food", text: "Meal Plans", link: "/admin/meal-plans" },
+      { icon: "mdi-dumbbell", text: "Excercises", link: "/admin/exercises" },
     ],
   }),
 };

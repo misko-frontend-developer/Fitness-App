@@ -1,19 +1,26 @@
 import Vue from "vue";
 import Router from "vue-router";
+//MAIN
 import Register from "../components/Register";
 import Login from "../components/Login";
-import Admin from "../components/Admin";
-import User from "../components/User";
 import Home from "../components/Home";
 import NotFound from '../components/NotFound'
+import firebase from "../firebase/firebaseInit";
+
+//USER
+import User from "../components/User";
+import UserSettings from "../components/user/UserSettings";
+
+//ADMIN
+import Admin from "../components/Admin";
 import UsersPanel from "../components/admin/UsersPanel";
 import Scheduler from "../components/admin/Scheduler";
 import Intensity from "../components/admin/Intensity";
 import Welcome from "../components/admin/Welcome";
 import MealPlansView from "../components/admin/MealPlansView";
 import AddMealPlan from "../components/admin/AddMealPlan";
-import UserSettings from "../components/user/UserSettings";
-import firebase from "../firebase/firebaseInit";
+import Exercises from "../components/admin/ExerciseAdmin";
+import Stats from "../components/admin/Stats"
 
 
 //import store from "../store";
@@ -94,6 +101,20 @@ let router = new Router({
           name: "AddMealPlan",
           beforeEnter: checkAdminRights,
           component: AddMealPlan,
+          
+        },
+        {
+          path: "exercises",
+          name: "exercises",
+          beforeEnter: checkAdminRights,
+          component: Exercises,
+          
+        },
+        {
+          path: "stats",
+          name: "stats",
+          beforeEnter: checkAdminRights,
+          component: Stats,
           
         },
       ],
