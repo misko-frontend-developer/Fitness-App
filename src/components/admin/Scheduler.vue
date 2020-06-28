@@ -295,12 +295,13 @@ export default {
       Intensity.dispatch("getIntensity"),
       Training.dispatch("getTrainings"),
       MealPlans.dispatch("getMealPlans"),
-      Exercise.dispatch("getExcercises"),
+      Exercise.dispatch("getExercise"),
       User.dispatch("getUsers"),
     ]).then(() => {
       next();
     });
   },
+
   data: () => ({
     today: new Date().toISOString().substr(0, 10),
     focus: new Date().toISOString().substr(0, 10),
@@ -555,8 +556,15 @@ export default {
     collectTrainings() {
       let trainings = Training.all();
       let newArray = [];
+      
+      trainings.forEach((training)=>{
+        
+       
+               
+       
+      })
 
-      let doneData;
+          let doneData;
 
       trainings.forEach((training) => {
         let excerArray = [];
@@ -574,13 +582,18 @@ export default {
           .forEach((element) => {
             intesArray.push(`${element.name} - [${element.id}]`);
           });
-
-        let obj = {
-          id: training.id,
-          name:
-            User.query()
+      
+             let user_name = User.query()
               .where("user_id", training.details.user_id)
-              .get()[0].name + ` [${training.details.user_id}]`,
+              .get()
+             
+     
+
+
+      
+     let obj = {
+          id: training.id,
+          name: user_name[0].name + ` [${training.details.user_id}]`,
           color: training.color,
           start: training.start,
           end: training.end,
@@ -596,9 +609,12 @@ export default {
         };
 
         newArray.push(obj);
-      });
+      }); 
+
+ 
 
       this.events = newArray;
+ 
     },
     viewDay({ date }) {
       this.focus = date;

@@ -92,7 +92,7 @@ import firebase from "../firebase/firebaseInit";
 import MealPlans from "../classes/MealPlans";
 export default {
   //Before update, check for children component to save data in Add Meal Plan
-
+  
   beforeRouteUpdate(to, from, next) {
     const getterState = MealPlans.getters("getMealPlansAPI");
 

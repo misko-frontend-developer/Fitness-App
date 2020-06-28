@@ -115,6 +115,11 @@ export default {
         text: "Profile Settings",
         link: "/user/settings",
       },
+        {
+        icon: "mdi-calendar",
+        text: "Calendar",
+        link: "/user/calendar",
+      },
     ],
   }),
 };

@@ -5,10 +5,5 @@ export default class Stats extends Model{
 
     static entity = 'stats'
 
-    
-   
 
-    static fields(){
-        
-    }
 }

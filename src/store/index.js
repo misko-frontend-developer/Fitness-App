@@ -14,7 +14,12 @@ import exercise from '../modules/excercise'
 import Exercise from '../classes/Exercise'
 import intensity from '../modules/intensity'
 import Intensity from '../classes/Intensity'
+import VueApexCharts from "vue-apexcharts";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
+import stats from '../modules/stats'
+import Stats from '../classes/Stats'
 import VueYouTubeEmbed from 'vue-youtube-embed'
 import Swal from 'sweetalert2'
 
@@ -22,10 +27,15 @@ import Swal from 'sweetalert2'
 
 
 
+Vue.component('apexcharts', VueApexCharts)
+
 Vue.component('multiselect', Multiselect)
+
 Vue.use(Vuex)
 Vue.use(VueResource)
 Vue.use(VueYouTubeEmbed, { global: true, componentId: "youtube-media" })
+Vue.use(jsPDF)
+Vue.use(html2canvas)
 
 VuexORM.use(VuexORMSearch, {
   
@@ -71,6 +81,7 @@ database.register(Training, training)
 database.register(Exercise, exercise)
 database.register(MealPlans, mealplans)
 database.register(Intensity, intensity)
+database.register(Stats, stats)
 
 export default new Vuex.Store({
 

@@ -1,16 +1,20 @@
 <template>
   <div>
-    <v-row>
-      <v-col>
+    <v-row >
+      <v-col class="mb-4">
         <img width="350" :src="require('../../photos/training4.svg')" alt="" />
       </v-col>
       <v-col>
-        <h2>Exercises overview</h2>
-        <h5>Save new exercises in database</h5>
+        <v-row>
+          <v-col>
+            <h2>Exercises overview</h2>
+            <h6>Save new exercises in database</h6>
+          </v-col>
+      
 
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on }">
-            <v-btn class="mx-2" v-on="on" color="primary">
+            <v-btn class="mt-8 mr-12" v-on="on" color="primary">
               Add new
             </v-btn>
           </template>
@@ -68,15 +72,25 @@
             </v-card>
           </v-form>
         </v-dialog>
-      </v-col>
-      <v-col>
-        <v-text-field @keyup="searchOpt" v-model="search"
-          ><v-icon slot="append" color="primary">mdi-magnify</v-icon>
-        </v-text-field>
+          </v-row>
+     
       </v-col>
     </v-row>
-
     <v-divider></v-divider>
+
+
+     <v-container class="ml-4" :align="right" >
+   
+          <v-col cols="3" >
+             
+           <v-text-field placeholder="Search..."  @keyup="searchOpt" v-model="search"
+            ><v-icon slot="append" color="primary">mdi-magnify</v-icon>
+          </v-text-field>
+          </v-col>
+        </v-container>
+   
+
+
     <v-container>
       <v-row class="mt-12" justify="space-around" no-gutters>
         <div v-for="exercise in getExercises" :key="exercise.id">

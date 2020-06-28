@@ -54,7 +54,7 @@ export default {
 
       await commit("testMutation", objUpdate);
     },
-
+  
     //GET ALL TRAINING DATA
     async getTrainings() {
       let data = [];

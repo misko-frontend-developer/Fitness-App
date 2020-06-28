@@ -7,16 +7,19 @@ export default {
     latestId: null,
     emailLoggedUser: null,
     currentUserDetails: null,
+    userIdQuery: null
   },
   getters: {
     getId: (state) => state.latestId,
     getAuthEmail: (state) => state.idLoggedUser,
     currentUserGetter: (state) => state.currentUserDetails,
+    getUserId : (state)=> state.userIdQuery
   },
   mutations: {
     setId: (state, id) => (state.latestId = id),
     authEmail: (state, email) => (state.emailLoggedUser = email),
     currentUserMutation: (state, data) => (state.currentUserDetails = data),
+    setUserId:(state, data) => (state.userIdQuery = data)
   },
   actions: {
     //Collect new ID for registration
@@ -95,7 +98,11 @@ export default {
                 .get()
                 .then((querySnapshot) => {
                   querySnapshot.forEach((doc) => {
-                    doc.ref.delete();
+                    
+                    doc.ref.update({
+                      name:'DeletedUser',
+
+                    });
                   });
                 });
              
@@ -121,6 +128,32 @@ export default {
 
     authEmail({ commit }, id) {
       commit("authEmail", id);
+    },
+
+    async getUserId({commit}, email){
+
+     let idGen = []
+      await db
+      .firestore()
+      .collection("users")
+      .where("email", "==", email)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+         
+      
+
+        idGen.push(  doc.data() )
+
+         
+        });
+
+       let getID = idGen[0].user_id
+        commit('setUserId',getID)
+      
+      })
+     
+
     },
   },
 };

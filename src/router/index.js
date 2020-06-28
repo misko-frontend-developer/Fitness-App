@@ -8,8 +8,9 @@ import NotFound from '../components/NotFound'
 import firebase from "../firebase/firebaseInit";
 
 //USER
-import User from "../components/User";
+import User from "../components/User"; 
 import UserSettings from "../components/user/UserSettings";
+import UserScheduler from "../components/user/userScheduler";
 
 //ADMIN
 import Admin from "../components/Admin";
@@ -130,6 +131,12 @@ let router = new Router({
           name: "usersettings",
           beforeEnter: checkUserRights,
           component: UserSettings,
+        },
+        {
+          path: "calendar",
+          name: "calendar",
+          beforeEnter: checkUserRights,
+          component: UserScheduler,
         },
       ],
     },
