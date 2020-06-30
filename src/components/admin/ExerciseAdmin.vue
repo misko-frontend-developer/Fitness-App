@@ -199,6 +199,9 @@
         :total-visible="7"
       ></v-pagination>
     </div>
+     <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 <script>
@@ -207,12 +210,15 @@ import { getIdFromURL } from "vue-youtube-embed";
 
 export default {
   async beforeRouteEnter(to, from, next) {
+
+    
     await Promise.all([Exercises.dispatch("getExercise")]).then(() => {
       next();
     });
   },
   data() {
     return {
+      overlay: true,
       page: 1,
       perPage: 6,
       pagTotal: 6,
@@ -231,6 +237,12 @@ export default {
       exerciseDescEdit: "",
       groups: ["abs", "legs", "shoulders", "arms", "back", "cardio", "chest"],
     };
+  },
+   mounted(){
+    setTimeout(()=>{
+      let vm  = this
+      vm.overlay = false
+    },1000)
   },
 
   created() {

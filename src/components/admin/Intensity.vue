@@ -116,12 +116,18 @@
         </v-card>
       </v-form>
     </v-dialog>
+      <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 <script>
 import Intensity from "../../classes/Intensity";
 export default {
   beforeRouteEnter(to, from, next) {
+
+      
+
     Intensity.dispatch("getIntensity").then(() => {
       next();
     });
@@ -129,6 +135,7 @@ export default {
 
   data() {
     return {
+      overlay: true,
       intensity: [],
       dialog: false,
       colorPicked: null,
@@ -139,7 +146,12 @@ export default {
     };
   },
 
-  
+  mounted(){
+     setTimeout(()=>{
+      let vm  = this
+      vm.overlay = false
+    },1000)
+  },
   created() {
     Intensity.dispatch("collectIntensityId");
   },

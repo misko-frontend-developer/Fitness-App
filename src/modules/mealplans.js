@@ -66,6 +66,7 @@ export default {
           return response.json();
         })
         .then((data) => {
+       
           commit("setMealPlansApi", data);
         });
     },

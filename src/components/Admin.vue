@@ -83,6 +83,7 @@
     </v-content>
 
     <v-dialog v-model="dialog" width="800px"> </v-dialog>
+      
   </v-app>
 </template>
 
@@ -94,6 +95,8 @@ export default {
   //Before update, check for children component to save data in Add Meal Plan
   
   beforeRouteUpdate(to, from, next) {
+
+    
     const getterState = MealPlans.getters("getMealPlansAPI");
 
     const obj2 = JSON.stringify(getterState);
@@ -152,7 +155,9 @@ export default {
     source: String,
   },
   data: () => ({
+    
     dialog: false,
+   
     drawer: null,
     items: [
       { icon: "mdi-home", text: "Home", link: "/admin" },

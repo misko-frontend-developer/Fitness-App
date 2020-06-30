@@ -18,6 +18,8 @@ import VueApexCharts from "vue-apexcharts";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
+
+
 import stats from '../modules/stats'
 import Stats from '../classes/Stats'
 import VueYouTubeEmbed from 'vue-youtube-embed'

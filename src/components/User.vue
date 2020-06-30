@@ -110,15 +110,16 @@ export default {
     drawer: null,
     items: [
       { icon: "mdi-home", text: "Home", link: "/user" },
-      {
-        icon: "mdi-contacts",
-        text: "Profile Settings",
-        link: "/user/settings",
-      },
+     
         {
         icon: "mdi-calendar",
         text: "Calendar",
         link: "/user/calendar",
+      },
+       {
+        icon: "mdi-brightness-5",
+        text: "Profile Settings",
+        link: "/user/settings",
       },
     ],
   }),

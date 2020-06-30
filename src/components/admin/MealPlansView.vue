@@ -215,6 +215,9 @@
         :total-visible="7"
       ></v-pagination>
     </div>
+     <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -222,12 +225,15 @@
 import MealPlans from "../../classes/MealPlans";
 export default {
   async beforeRouteEnter(to, from, next) {
+     
+
     await Promise.all([MealPlans.dispatch("getMealPlans")]).then(() => {
       next();
     });
   },
   data() {
     return {
+      overlay: true,
       dialog: false,
       notifications: false,
       sound: true,
@@ -239,6 +245,13 @@ export default {
       getterSearch: "",
       nameChange: "",
     };
+  },
+  
+  mounted(){
+    setTimeout(()=>{
+      let vm  = this
+      vm.overlay = false
+    },1000)
   },
   computed: {
     displayMealPlans() {

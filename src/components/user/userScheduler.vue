@@ -93,116 +93,108 @@
                     </v-toolbar-items>
                   </v-toolbar>
                   <v-container id="app">
-                    <v-row justify="space-around">
+                    <v-row justify="space-between">
                       <v-col>
-                        <v-subheader>Training Intensity </v-subheader>
-                        <v-row>
-                          <h6 class="mx-3">Name: {{ intesityName }}</h6>
-                          <h6 class="mx-3">Sets: {{ sets }}</h6>
-                          <h6 class="mx-3">Reps: {{ reps }}</h6>
-                          <h6 class="mx-3">Breaks: {{ breaks }} min</h6>
+                        <v-row clas>
+                          <h6 class="mx-3">
+                            <v-chip
+                              class="m-1"
+                              color="orange"
+                              text-color="white"
+                            >
+                              {{ intesityName }}
+                              <v-icon right>mdi-chart-line</v-icon>
+                            </v-chip>
+                          </h6>
+                          <v-row>
+                            <h6 class="mx-3 mt-4">Sets: {{ sets }}</h6>
+                            <h6 class="mx-3 mt-4">Reps: {{ reps }}</h6>
+                            <h6 class="mx-3 mt-4">Breaks: {{ breaks }} min</h6>
+                          </v-row>
                         </v-row>
                       </v-col>
                       <v-col>
-                        <v-subheader>Training date</v-subheader>
-                        <v-container>{{ dateTraining }}</v-container>
+                        <v-container>
+                          <v-chip class=" ml-3 mt-1" color="primary" label>
+                            Date : <v-icon left>mdi-calendar</v-icon>
+                            {{ dateTraining }}</v-chip
+                          ></v-container
+                        >
                       </v-col>
                     </v-row>
-                    <v-row align="center">
-                      <v-col>
-                        <v-subheader> Meal Plan</v-subheader>
-                        <v-card>
-                          <v-col>
-                            <v-row align="center">
-                              <v-col>
-                                <img
-                                  width="100"
-                                  :src="
-                                    'https://spoonacular.com/recipeImages/' +
-                                      mealplan1Img +
-                                      '-312x231.jpg'
+                    <v-row class="my-4">
+                      <v-chip color="primary" class="mb-2"
+                        >Exercises<v-icon>mdi-dumbbell</v-icon></v-chip
+                      >
+                      <v-simple-table>
+                        <template v-slot:default>
+                          <thead>
+                            <tr>
+                              <th class="text-left">Name</th>
+                              <th class="text-left">Group</th>
+                              <th class="text-left">Description</th>
+                              <th class="text-left">Link</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="item in excercises" :key="item.name">
+                              <td>{{ item.title }}</td>
+                              <td>
+                                <v-chip
+                                  class="m-2"
+                                  color="primary"
+                                  text-color="white"
+                                >
+                                  {{ item.group }}
+                                  <v-icon right>mdi-label</v-icon>
+                                </v-chip>
+                              </td>
+                              <td>{{ item.desc }}</td>
+                              <td>
+                                <v-btn
+                                  icon
+                                  :href="
+                                    'https://www.youtube.com/watch?v=' +
+                                      item.video
                                   "
-                              /></v-col>
-                              <v-col
-                                >Link :
-                                <v-btn icon :href="mealplan1Web" target="_blank"
+                                  target="_blank"
                                   ><v-icon>mdi-web</v-icon></v-btn
-                                ></v-col
-                              >
-                              <v-col>
-                                <v-card-subtitle
-                                  >{{ mealplan1Title }}
-                                </v-card-subtitle></v-col
-                              >
-                            </v-row>
-                            <v-row align="center">
-                              <v-col>
-                                <img
-                                  width="100"
-                                  :src="
-                                    'https://spoonacular.com/recipeImages/' +
-                                      mealplan2Img +
-                                      '-312x231.jpg'
-                                  "
-                              /></v-col>
-                              <v-col
-                                >Link :
-                                <v-btn icon :href="mealplan2Web" target="_blank"
-                                  ><v-icon>mdi-web</v-icon></v-btn
-                                ></v-col
-                              >
-                              <v-col>
-                                <v-card-subtitle
-                                  >{{ mealplan2Title }}
-                                </v-card-subtitle></v-col
-                              >
-                            </v-row>
-                            <v-row align="center">
-                              <v-col>
-                                <img
-                                  width="100"
-                                  :src="
-                                    'https://spoonacular.com/recipeImages/' +
-                                      mealplan3Img +
-                                      '-312x231.jpg'
-                                  "
-                              /></v-col>
-                              <v-col
-                                >Link :
-                                <v-btn icon :href="mealplan2Web" target="_blank"
-                                  ><v-icon>mdi-web</v-icon></v-btn
-                                ></v-col
-                              >
-                              <v-col>
-                                <v-card-subtitle
-                                  >{{ mealplan2Title }}
-                                </v-card-subtitle></v-col
-                              >
-                            </v-row>
-                          </v-col>
-                        </v-card>
-                      </v-col>
-                      <v-col>
-                        <v-subheader>Exercises</v-subheader>
-                        <v-card>
-                          <div v-for="ex in excercises" :key="ex.id">
-                            <v-btn
-                              color="primary"
-                              :href="
-                                'https://www.youtube.com/watch?v=' + ex.video
-                              "
-                              target="_blank"
+                                >
+                              </td>
+                            </tr>
+                          </tbody>
+                        </template>
+                      </v-simple-table>
+                    </v-row>
+                    <v-row class="mt-12 ml-1">
+                      <v-chip color="success" class="mb-8"
+                        >Meal Plan <v-icon> mdi-food-variant</v-icon></v-chip
+                      >
+                      <h4 class="mx-3">{{ mealPlanName }}</h4>
+                    </v-row>
+                    <v-row>
+                      <div v-for="plans in mealplans" :key="plans.id">
+                        <v-card class="mx-4" max-width="312">
+                          <img
+                            :src="
+                              'https://spoonacular.com/recipeImages/' +
+                                plans.id +
+                                '-312x231.' +
+                                plans.imageType
+                            "
+                          />
+                          <v-card-title>
+                            {{ plans.title }}
+                          </v-card-title>
+                          <v-card-subtitle>
+                            Website:
+                            <v-btn icon :href="plans.sourceUrl" target="_blank">
+                              <v-icon>mdi-web</v-icon></v-btn
                             >
-                              {{ ex.title }}
-                              <v-icon class="mx-3">mdi-label</v-icon>
-                            </v-btn>
-                            <v-card-subtitle></v-card-subtitle>
-                          </div>
+                          </v-card-subtitle>
                         </v-card>
-                      </v-col>
+                      </div>
                     </v-row>
-
-                    <div id="pdf"></div>
                   </v-container>
                 </v-card>
               </v-dialog>
@@ -229,7 +221,8 @@ import Exercise from "../../classes/Exercise";
 import User from "../../classes/User";
 
 import html2canvas from "html2canvas";
-import * as JsPDF from "jspdf";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 import Excercise from "../../classes/Exercise";
 export default {
@@ -240,7 +233,7 @@ export default {
       Intensity.dispatch("getIntensity"),
       Exercise.dispatch("getExercise"),
       User.dispatch("getUserId", firebase.auth().currentUser.email),
-       User.dispatch("currentUserData", firebase.auth().currentUser.email)
+      User.dispatch("currentUserData", firebase.auth().currentUser.email),
     ]).then(() => {
       next();
     });
@@ -259,7 +252,7 @@ export default {
     //Vuetify Calendar data
     excercises: [],
     mealplans: [],
-    intesity: false,
+    intesity: null,
 
     dialogEdit: false,
     dialog: false,
@@ -284,15 +277,10 @@ export default {
     intesityName: null,
     reps: null,
     dateTraining: null,
-    mealplan1Img: null,
-    mealplan1Title: null,
-    mealplan1Web: null,
-    mealplan2Img: null,
-    mealplan2Title: null,
-    mealplan2Web: null,
-    mealplan3Img: null,
-    mealplan3Title: null,
-    mealplan3Web: null,
+    mealPlan1: null,
+    mealPlan2: null,
+    mealPlan3: null,
+    mealPlanName: null,
   }),
 
   mounted() {
@@ -300,8 +288,8 @@ export default {
   },
 
   computed: {
-    getName(){
-      return User.getters('currentUserGetter')
+    getName() {
+      return User.getters("currentUserGetter");
     },
     monthFormatter() {
       return this.$refs.calendar.getFormatter({
@@ -310,34 +298,81 @@ export default {
       });
     },
 
-
-    userIdGetter(){
-
+    userIdGetter() {
       return User.getters("getUserId");
-    }
-
-
+    },
   },
   methods: {
     exportPdf(ev) {
-      html2canvas(document.querySelector("#app"), {
-        imageTimeout: 2000,
+      /*console.log(this.excercises);
+      console.log(this.mealplans);
+      console.log(this.intesity);
+      console.log(ev); */
 
-        scale: 4,
-      }).then((canvas) => {
-        document.getElementById("pdf").appendChild(canvas);
-        let img = canvas.toDataURL("image/png");
-        let pdf = new JsPDF("landscape", "mm", "a4");
-        pdf.addImage(img, "PNG", 15, 15, 300, 100);
-        pdf.save("relatorio-remoto.pdf");
+      //Prepare data for pdf export
 
-        document.getElementById("pdf").innerHTML = "";
+      let adjustedExerciseLinks = [];
+      let adjustedMealPlans = [];
+      let adjustedMealPlansLinks = [];
+
+      this.excercises.forEach((exer, j) => {
+        adjustedExerciseLinks.push({
+          id: j + 1,
+          name: exer.title,
+          url: "https://www.youtube.com/watch?v=" + exer.video,
+        });
       });
+
+      this.mealplans.forEach((plan) => {
+        adjustedMealPlans.push(plan.title);
+        adjustedMealPlansLinks.push(plan.sourceUrl);
+      });
+
+      const doc = new jsPDF("l");
+      let textHeader =
+       
+        this.intesity.name +
+        " - Reps :" +
+        this.intesity.reps +
+        " / Sets :" +
+        this.intesity.sets +
+        " / Breaks: " +
+        this.intesity.break+' Min' +
+        " / Date :" +
+        ev.start;
+
+      doc.setFontSize(18);
+      doc.text(textHeader, 14, 22);
+      doc.setFontSize(11);
+      doc.setTextColor(100);
+
+      var pageSize = doc.internal.pageSize;
+      var pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth();
+      var text = doc.splitTextToSize("Meals ", pageWidth - 35, {});
+      doc.text(text, 14, 30);
+
+      doc.autoTable({
+        head: [["First Meal", "Second Meal", "Third Meal"]],
+        body: [adjustedMealPlans, adjustedMealPlansLinks],
+        startY: 50,
+        showHead: "firstPage",
+      });
+
+      doc.text("Exercises", 14, 90);
+      doc.autoTable({
+        head: [],
+        body: adjustedExerciseLinks,
+        startY: 100,
+        showHead: false,
+        columnStyles: {
+          id: { fillColor: [41, 128, 185], textColor: 255, fontStyle: "bold" },
+        },
+      });
+
+      doc.save("table.pdf");
     },
 
     bindDataEdit(data) {
-     
-
       let excerArray = [];
 
       let inte = Intensity.find(data.details.intensity_id);
@@ -351,47 +386,45 @@ export default {
         .whereIdIn(excerArray)
         .get();
 
-     
+      let intensityObj = {
+        name: inte.name,
+        reps: inte.reps,
+        sets: inte.sets,
+        break: inte.break,
+      };
+
+      this.mealPlan1 = mealp.meal1;
+      this.mealPlan2 = mealp.meal2;
+      this.mealPlan3 = mealp.meal3;
+      this.mealPlanName = mealp.name;
+
+      this.mealplans = [this.mealPlan1, this.mealPlan2, this.mealPlan3];
       this.excercises = excer;
-      this.intesity = inte;
+      this.intesity = intensityObj;
       this.dateTraining = data.start;
 
       this.intesityName = inte.name;
       this.sets = inte.sets;
       this.breaks = inte.break;
       this.reps = inte.reps;
-
-      this.mealplan1Img = mealp.meal1[0];
-      this.mealplan1Web = mealp.meal1[2];
-      this.mealplan1Title = mealp.meal1[3];
-
-      this.mealplan2Img = mealp.meal2[0];
-      this.mealplan2Web = mealp.meal2[2];
-      this.mealplan2Title = mealp.meal2[3];
-
-      this.mealplan3Img = mealp.meal3[0];
-      this.mealplan3Web = mealp.meal3[2];
-      this.mealplan3Title = mealp.meal3[3];
     },
     collectTraings() {
       let randomArray = [];
       let trainings = Training.all();
-      console.log(trainings)
-      console.log(this.getName[0].name)
-      let userId = this.userIdGetter
+
+      let userId = this.userIdGetter;
 
       trainings.forEach((training) => {
         if (training.details.user_id == userId) {
+          let updatedTraining = {
+            id: training.id,
+            name: this.getName[0].name + ` [${training.details.user_id}]`,
+            color: training.color,
+            start: training.start,
+            end: training.end,
+            details: training.details,
+          };
 
-              let updatedTraining ={
-                      id: training.id,
-          name: this.getName[0].name + ` [${training.details.user_id}]`,
-          color:training.color,
-          start: training.start,
-          end:training.end,
-          details: training.details
-          }
-            console.log(updatedTraining)
           randomArray.push(updatedTraining);
         }
       });

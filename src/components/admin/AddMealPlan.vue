@@ -11,8 +11,12 @@
               Generate meal plans using the following parameters:
             </h6>
             <h7 class="mr-5">API Spoonacular</h7>
-             <a href="https://spoonacular.com/food-api" target=”_blank” ><img width="70" :src="require('../../photos/spoonacular.png')" alt="" /></a> 
-
+            <a href="https://spoonacular.com/food-api" target="”_blank”"
+              ><img
+                width="70"
+                :src="require('../../photos/spoonacular.png')"
+                alt=""
+            /></a>
           </v-col>
           <v-col>
             <img width="350" :src="require('../../photos/diet.svg')" alt="" />
@@ -49,8 +53,6 @@
           </v-col>
         </v-container>
       </v-col>
-
-      <div></div>
     </v-container>
 
     <div v-for="(diet, i) in getPlans" :key="diet.id">
@@ -107,7 +109,7 @@
                 width="200"
                 :src="
                   'https://spoonacular.com/recipeImages/' +
-                    d.id +
+                    data.id +
                     '-312x231.' +
                     data.imageType
                 "
@@ -133,6 +135,9 @@
         </div>
       </v-card>
     </div>
+     <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -140,6 +145,8 @@
 import MealPlans from "../../classes/MealPlans";
 export default {
   beforeRouteEnter(to, from, next) {
+  
+
     MealPlans.dispatch("collectMealPlanId").then(() => {
       next();
     });
@@ -147,6 +154,7 @@ export default {
 
   data() {
     return {
+      overlay: true,
       choosenCal: 2000,
       choosenDiet: "Paleo",
       availableCalories: [2000, 2500, 3000, 3500],
@@ -176,12 +184,14 @@ export default {
 
   computed: {
     getPlans() {
-    
-
-      this.plans = MealPlans.getters("getMealPlansAPI").week;
-
-      return this.plans;
+      return MealPlans.getters("getMealPlansAPI").week;
     },
+  },
+   mounted(){
+    setTimeout(()=>{
+      let vm  = this
+      vm.overlay = false
+    },1000)
   },
   methods: {
     isDisabled(id) {
@@ -230,7 +240,6 @@ export default {
       });
     },
   },
-
 };
 </script>
 

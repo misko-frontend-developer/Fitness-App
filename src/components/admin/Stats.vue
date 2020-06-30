@@ -14,7 +14,9 @@
             </v-col>
 
         </v-row>
-
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
     
     </div>
 </template>
@@ -28,6 +30,8 @@ import PerDone from '../admin/stats/PerDone'
 export default {
 
       async beforeRouteEnter(to, from, next) {
+         
+
           
     await Promise.all([Stats.dispatch('perGender'),Stats.dispatch('perDone')]).then(() => 
       next())
@@ -39,6 +43,18 @@ export default {
       PerGender,
       PerDone
 
+  },
+
+  data(){
+    return{
+        overlay :true
+    }
+  },
+  mounted(){
+    setTimeout(()=>{
+      let vm  = this
+      vm.overlay = false
+    },1000)
   }
     
 }

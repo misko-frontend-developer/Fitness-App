@@ -26,7 +26,13 @@
         </div>
       </div>
     </div>
+    <v-overlay :value="overlay">
+
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </div>
+
+  
 </template>
 
 <script>
@@ -39,6 +45,7 @@ export default {
     return {
       email: null,
       password: null,
+      overlay: false,
     };
   },
   components: {
@@ -46,33 +53,37 @@ export default {
   },
   methods: {
     login: function(e) {
+
+      this.overlay = !this.overlay
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           (user) => {
             User.dispatch("authEmail", user.email);
-
+              
             if (this.email == "admin@admin.com") {
-              //alert(`You are logged in as ${this.email}`);
+             
               Toast.fire({
                 icon: "success",
                 title: `You are logged in as ${this.email}`,
               });
 
               this.$router.push("/admin");
+               this.overlay = !this.overlay
             } else {
-              // alert(`You are logged in as ${this.email}`);
+            
               Toast.fire({
                 icon: "success",
                 title: `You are logged in as ${this.email}`,
               });
 
               this.$router.push("/user");
+                this.overlay = !this.overlay
             }
           },
           (err) => {
-            alert(err.message);
+            this.overlay = !this.overlay
             Toast.fire({
               icon: "error",
               title: `${err.message}`,

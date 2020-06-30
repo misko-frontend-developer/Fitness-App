@@ -71,30 +71,45 @@ let router = new Router({
           name: "welcome",
           beforeEnter: checkAdminRights,
           component: Welcome,
+          meta: {
+            requiresAuth: true,
+          },
         },
         {
           path: "userspanel",
           name: "userspanel",
           beforeEnter: checkAdminRights,
           component: UsersPanel,
+          meta: {
+            requiresAuth: true,
+          },
         },
         {
           path: "scheduler",
           name: "scheduler",
           beforeEnter: checkAdminRights,
           component: Scheduler,
+          meta: {
+            requiresAuth: true,
+          },
         },
         {
           path: "intensity",
           name: "intensity",
           beforeEnter: checkAdminRights,
           component: Intensity,
+          meta: {
+            requiresAuth: true,
+          },
         },
         {
           path: "meal-plans",
           name: "MealPlansView",
           beforeEnter: checkAdminRights,
           component: MealPlansView,
+          meta: {
+            requiresAuth: true,
+          },
           
         },
         {
@@ -102,6 +117,9 @@ let router = new Router({
           name: "AddMealPlan",
           beforeEnter: checkAdminRights,
           component: AddMealPlan,
+          meta: {
+            requiresAuth: true,
+          },
           
         },
         {
@@ -109,6 +127,9 @@ let router = new Router({
           name: "exercises",
           beforeEnter: checkAdminRights,
           component: Exercises,
+          meta: {
+            requiresAuth: true,
+          },
           
         },
         {
@@ -116,27 +137,42 @@ let router = new Router({
           name: "stats",
           beforeEnter: checkAdminRights,
           component: Stats,
+          meta: {
+            requiresAuth: true,
+          },
           
         },
       ],
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/user/",
       name: "User",
       beforeEnter: checkUserRights,
       component: User,
+      meta: {
+        requiresAuth: true,
+      },
       children: [
         {
           path: "settings",
           name: "usersettings",
           beforeEnter: checkUserRights,
           component: UserSettings,
+          meta: {
+            requiresAuth: true,
+          },
         },
         {
           path: "calendar",
           name: "calendar",
           beforeEnter: checkUserRights,
           component: UserScheduler,
+          meta: {
+            requiresAuth: true,
+          },
         },
       ],
     },
@@ -148,7 +184,43 @@ let router = new Router({
   ],
 });
 
-  
+
+
+router.beforeEach((to, from ,next)=>{
+
+    if(to.matched.some(record => record.meta.requiresAuth)){
+
+          if(!firebase.auth().currentUser){
+            next({
+              path:'/login',
+              query:{
+                redirect: to.fullPath
+              }
+            })
+          }else{
+            next()
+          }
+
+    }else if(to.matched.some(record => record.meta.requiresGuest)){
+
+      if(firebase.auth().currentUser){
+        next({
+          path:'/user',
+          query:{
+            redirect: to.fullPath
+          }
+        })
+      }else{
+        next();
+      }
+      
+    }else{
+
+      next();
+      
+    }
+
+});
 
 function checkUserRights(to, from, next) {
   let current = firebase.auth().currentUser.email;
@@ -171,7 +243,7 @@ function checkAdminRights(to, from, next) {
   } else if (current == "admin@admin.com") {
     next();
   } else {
-    next("/");
+    next("/user");
   }
 
 }

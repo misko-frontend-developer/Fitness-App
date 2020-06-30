@@ -7,22 +7,22 @@ export default {
     latestId: null,
     emailLoggedUser: null,
     currentUserDetails: null,
-    userIdQuery: null
+    userIdQuery: null,
   },
   getters: {
     getId: (state) => state.latestId,
     getAuthEmail: (state) => state.idLoggedUser,
     currentUserGetter: (state) => state.currentUserDetails,
-    getUserId : (state)=> state.userIdQuery
+    getUserId: (state) => state.userIdQuery,
   },
   mutations: {
     setId: (state, id) => (state.latestId = id),
     authEmail: (state, email) => (state.emailLoggedUser = email),
     currentUserMutation: (state, data) => (state.currentUserDetails = data),
-    setUserId:(state, data) => (state.userIdQuery = data)
+    setUserId: (state, data) => (state.userIdQuery = data),
   },
   actions: {
-    //Collect new ID for registration
+    //COLLECT NEW ID FOR REGISTRATION 
     async collectId({ commit }) {
       let arrayID = [];
       await db
@@ -40,7 +40,7 @@ export default {
       commit("setId", idIncrement);
     },
 
-    //Get All users for admin panel
+    //COLLECT ALL USERS FOR ADMIN PANEL
     async getUsers({ dispatch }) {
       let data = [];
       let base = await db
@@ -53,7 +53,7 @@ export default {
       });
       User.create({ data: data });
     },
-    // Adding user from Register
+    // ADD NEW USER TO FIREBASE FROM REGISTER
     async addUser({ commit }, obj) {
       await db
         .firestore()
@@ -66,7 +66,7 @@ export default {
         });
       User.insert({ obj });
     },
-    // Profile details for the current logged user
+    // PROFILE DETAILS FOR CURRENT USER LOGGED 
 
     async currentUserData({ commit }, email) {
       let data = [];
@@ -83,34 +83,30 @@ export default {
           });
         });
     },
-    //Delete user from Firebase, also users collection
+    //DELETE USER ACCESS TO FIRESTORE AND RENAME IN FIREBASE 
     deleteUser() {
       let current = db.auth().currentUser;
-      current
-        .delete()
-        .then(() => {
-          db.auth()
-            .signOut()
-            .then(() => {
-              db.firestore()
-                .collection("users")
-                .where("email", "==", current.email)
-                .get()
-                .then((querySnapshot) => {
-                  querySnapshot.forEach((doc) => {
-                    
-                    doc.ref.update({
-                      name:'DeletedUser',
-
-                    });
+      current.delete().then(() => {
+        db.auth()
+          .signOut()
+          .then(() => {
+            db.firestore()
+              .collection("users")
+              .where("email", "==", current.email)
+              .get()
+              .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                  doc.ref.update({
+                    name: "DeletedUser",
                   });
                 });
-             
-              router.push("/login");
-            });
-        })
+              });
+
+            router.push("/login");
+          });
+      });
     },
-    //Edit user name from collection USERS
+    //EDIT USER NAME IN FIREBASE 
     editUserName({ commit }, obj) {
       db.firestore()
         .collection("users")
@@ -120,7 +116,7 @@ export default {
           querySnapshot.forEach((doc) => {
             doc.ref.update({
               name: obj.name,
-              gender : obj.gender
+              gender: obj.gender,
             });
           });
         });
@@ -129,31 +125,22 @@ export default {
     authEmail({ commit }, id) {
       commit("authEmail", id);
     },
-
-    async getUserId({commit}, email){
-
-     let idGen = []
+    //GET CURRENT USER ID FROM FIREBASE - USER SCHEDULER
+    async getUserId({ commit }, email) {
+      let idGen = [];
       await db
-      .firestore()
-      .collection("users")
-      .where("email", "==", email)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-         
-      
+        .firestore()
+        .collection("users")
+        .where("email", "==", email)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            idGen.push(doc.data());
+          });
 
-        idGen.push(  doc.data() )
-
-         
+          let getID = idGen[0].user_id;
+          commit("setUserId", getID);
         });
-
-       let getID = idGen[0].user_id
-        commit('setUserId',getID)
-      
-      })
-     
-
     },
   },
 };

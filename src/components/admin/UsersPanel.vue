@@ -22,7 +22,10 @@
     </tbody>
   
   </v-simple-table>
-      </template>
+  </template>
+   <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </div>
   
 </template>
@@ -31,6 +34,16 @@
 import Users from "../../classes/User";
 
 export default {
+   beforeRouteEnter(to, from, next) {
+
+    next();
+   
+  },
+  data(){
+    return {
+      overlay : true
+    }
+  },
   methods:{
    
   },
@@ -46,6 +59,11 @@ export default {
    }
  },
  mounted(){
+   
+    setTimeout(()=>{
+      let vm  = this
+      vm.overlay = false
+    },1000)
   
  }
 }

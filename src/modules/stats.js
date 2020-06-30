@@ -6,6 +6,8 @@ export default {
     perDone: null,
   },
   actions: {
+
+    //CALCULATE ALL TRAINING PER DONE STATUS - STATS SECTION 
     async perDone({ commit }) {
       let data = [];
 
@@ -41,6 +43,8 @@ export default {
           commit("setDoneData", obj);
         });
     },
+    
+    //CALCULATE ALL USERS PER GENDER  - STATS SECTION 
 
     async perGender({ commit }) {
       let data = [];

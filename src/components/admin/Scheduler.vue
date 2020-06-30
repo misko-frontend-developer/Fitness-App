@@ -279,7 +279,11 @@
         </v-menu>
       </v-sheet>
     </v-col>
+      <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-row>
+  
 </template>
 
 <script>
@@ -291,6 +295,8 @@ import Intensity from "../../classes/Intensity";
 
 export default {
   async beforeRouteEnter(to, from, next) {
+     
+
     await Promise.all([
       Intensity.dispatch("getIntensity"),
       Training.dispatch("getTrainings"),
@@ -334,7 +340,7 @@ export default {
     dateTraining: null,
 
     //Vuetify Calendar data
-
+    overlay : true,
     dialogEdit: false,
     dialog: false,
     notifications: false,
@@ -365,6 +371,10 @@ export default {
   },
   mounted() {
     this.collectTrainings();
+      setTimeout(()=>{
+      let vm  = this
+      vm.overlay = false
+    },1000)
   },
 
   methods: {

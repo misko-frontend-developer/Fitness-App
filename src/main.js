@@ -6,6 +6,9 @@ import store from './store'
 import vuetify from '@/plugins/vuetify'
 import bootstrap from '@/plugins/bootstrap'
 
+import firebase from 'firebase'
+import './firebase/firebaseInit'
+
 Vue.config.productionTip = false
 
 
@@ -18,11 +21,21 @@ Vue.config.warnHandler = function (msg, vm, trace) {
     trace = null;
   }
 }
-new Vue({
-  router,
-  store,
-  vuetify,
-  bootstrap,
-  render: h => h(App)
-}).$mount('#app')
+
+
+let app;
+firebase.auth().onAuthStateChanged(user=>{
+  if(!app){
+    app = new Vue({
+      router,
+      store,
+      vuetify,
+      bootstrap,
+      render: h => h(App)
+    }).$mount('#app')
+  }
+})
+
+
+
 
