@@ -8,6 +8,7 @@ import bootstrap from '@/plugins/bootstrap'
 
 import firebase from 'firebase'
 import './firebase/firebaseInit'
+require('./assets/css/main.css')
 
 Vue.config.productionTip = false
 
@@ -29,8 +30,8 @@ firebase.auth().onAuthStateChanged(user=>{
     app = new Vue({
       router,
       store,
-      vuetify,
       bootstrap,
+      vuetify,
       render: h => h(App)
     }).$mount('#app')
   }

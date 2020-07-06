@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row >
+    <v-row>
       <v-col class="mb-4">
         <img width="350" :src="require('../../photos/training4.svg')" alt="" />
       </v-col>
@@ -10,86 +10,82 @@
             <h2>Exercises overview</h2>
             <h6>Save new exercises in database</h6>
           </v-col>
-      
 
-        <v-dialog v-model="dialog" persistent max-width="600px">
-          <template v-slot:activator="{ on }">
-            <v-btn class="mt-8 mr-12" v-on="on" color="primary">
-              Add new
-            </v-btn>
-          </template>
-          <v-form>
-            <v-card>
-              <v-card-title>
-                <span class="headline">Add New exercise</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Name*"
-                        v-model="exerciseTitle"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-select
-                        :items="groups"
-                        v-model="exerciseGroup"
-                        label="Choose group"
-                      ></v-select>
-                    </v-col>
+          <v-dialog v-model="dialog" persistent max-width="600px">
+            <template v-slot:activator="{ on }">
+              <v-btn class="mt-8 mr-12" v-on="on" color="primary">
+                Add new
+              </v-btn>
+            </template>
+            <v-form>
+              <v-card>
+                <v-card-title>
+                  <span class="headline">Add New exercise</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field
+                          label="Name*"
+                          v-model="exerciseTitle"
+                          required
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-select
+                          :items="groups"
+                          v-model="exerciseGroup"
+                          label="Choose group"
+                        ></v-select>
+                      </v-col>
 
-                    <v-col cols="12">
-                      <v-text-field
-                        label="Link*"
-                        v-model="exerciseVideo"
-                        hint="Enter YouTube Link here"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row justify="center">
-                    <v-textarea
-                      v-model="exerciseDesc"
-                      solo
-                      name="input-7-4"
-                      label="Add description"
-                    ></v-textarea>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="dialog = false"
-                  >Close</v-btn
-                >
-                <v-btn color="blue darken-1" text @click="addExerciseData"
-                  >Save</v-btn
-                >
-              </v-card-actions>
-            </v-card>
-          </v-form>
-        </v-dialog>
-          </v-row>
-     
+                      <v-col cols="12">
+                        <v-text-field
+                          label="Link*"
+                          v-model="exerciseVideo"
+                          hint="Enter YouTube Link here"
+                          required
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-textarea
+                        v-model="exerciseDesc"
+                        solo
+                        name="input-7-4"
+                        label="Add description"
+                      ></v-textarea>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="dialog = false"
+                    >Close</v-btn
+                  >
+                  <v-btn color="blue darken-1" text @click="addExerciseData"
+                    >Save</v-btn
+                  >
+                </v-card-actions>
+              </v-card>
+            </v-form>
+          </v-dialog>
+        </v-row>
+        <v-row>
+          <v-col class="ml-5" cols="8">
+            <v-text-field
+              placeholder="Search..."
+              @keyup="searchOpt"
+              v-model="search"
+              ><v-icon slot="append" color="primary">mdi-magnify</v-icon>
+            </v-text-field>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
-    <v-divider></v-divider>
 
-
-     <v-container class="ml-4" :align="right" >
-   
-          <v-col cols="3" >
-             
-           <v-text-field placeholder="Search..."  @keyup="searchOpt" v-model="search"
-            ><v-icon slot="append" color="primary">mdi-magnify</v-icon>
-          </v-text-field>
-          </v-col>
-        </v-container>
-   
-
+    <v-container class="ml-4" :align="right"> </v-container>
 
     <v-container>
       <v-row class="mt-12" justify="space-around" no-gutters>
@@ -199,7 +195,7 @@
         :total-visible="7"
       ></v-pagination>
     </div>
-     <v-overlay :value="overlay">
+    <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
   </div>
@@ -210,8 +206,6 @@ import { getIdFromURL } from "vue-youtube-embed";
 
 export default {
   async beforeRouteEnter(to, from, next) {
-
-    
     await Promise.all([Exercises.dispatch("getExercise")]).then(() => {
       next();
     });
@@ -238,11 +232,11 @@ export default {
       groups: ["abs", "legs", "shoulders", "arms", "back", "cardio", "chest"],
     };
   },
-   mounted(){
-    setTimeout(()=>{
-      let vm  = this
-      vm.overlay = false
-    },1000)
+  mounted() {
+    setTimeout(() => {
+      let vm = this;
+      vm.overlay = false;
+    }, 1000);
   },
 
   created() {

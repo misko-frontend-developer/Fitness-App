@@ -2,11 +2,11 @@
   <div>
     <v-row class=" mt-8">
       <v-col>
-        <h1><strong> Welcome Admin</strong></h1>
-        <h5>Main admin panel</h5>
+        <h1><strong> Welcome! </strong></h1>
+        <h5>Main User Panel</h5>
       </v-col>
       <v-col>
-        <img width="400" :src="require('../../photos/training3.svg')" alt="" />
+        <img width="400" :src="require('../../photos/training2.svg')" alt="" />
       </v-col>
     </v-row>
     <v-overlay :value="overlay">

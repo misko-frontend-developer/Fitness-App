@@ -31,7 +31,6 @@
               type="number"
               min="1000"
               label="Enter Calories"
-              editable
               item-value="text"
               v-model="choosenCal"
             ></v-overflow-btn>
@@ -135,7 +134,7 @@
         </div>
       </v-card>
     </div>
-     <v-overlay :value="overlay">
+    <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
   </v-container>
@@ -145,8 +144,6 @@
 import MealPlans from "../../classes/MealPlans";
 export default {
   beforeRouteEnter(to, from, next) {
-  
-
     MealPlans.dispatch("collectMealPlanId").then(() => {
       next();
     });
@@ -187,13 +184,14 @@ export default {
       return MealPlans.getters("getMealPlansAPI").week;
     },
   },
-   mounted(){
-    setTimeout(()=>{
-      let vm  = this
-      vm.overlay = false
-    },1000)
+  mounted() {
+    setTimeout(() => {
+      let vm = this;
+      vm.overlay = false;
+    }, 1000);
   },
   methods: {
+    // Method for checking already added mealplans
     isDisabled(id) {
       let value = this.disabledArray.includes(id);
       if (value) {
@@ -202,7 +200,7 @@ export default {
         return false;
       }
     },
-
+    // Add new Meal Plan
     addNewPlan(data, counter) {
       if (this.planName !== "") {
         MealPlans.dispatch("collectMealPlanId");
@@ -231,6 +229,8 @@ export default {
         });
       }
     },
+
+    //Search API, using details Diet and Calories
     searchApi() {
       this.planName = ` ${this.choosenDiet}  /  ${this.choosenCal} calories`;
 

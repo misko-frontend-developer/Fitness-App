@@ -2,20 +2,23 @@
   <div>
     <h1>Profile Settings </h1>
     <v-card class="mx-auto" max-width="344" outlined>
+      <v-row>
+
+      <v-col cols="10">
       <v-list-item three-line>
         <v-list-item-content>
           <div class="overline mb-4"></div>
-
+            <v-list-item-subtitle> Email : {{ email }}</v-list-item-subtitle>
           <div v-if="isEditing">
-            <v-list-item-title class="headline mb-1" v-model="name">{{
+            <v-list-item-title class="headline my-6" v-model="name"> Name : {{
               name
             }}</v-list-item-title>
           </div>
-          <v-text-field class="input-name" v-else v-model="name"></v-text-field>
-          <v-list-item-subtitle>{{ email }}</v-list-item-subtitle>
+          <v-text-field class="input-name " v-else v-model="name"></v-text-field>
+
 
           <div v-if="isEditing">
-            <v-list-item-title class="headline mb-1" v-model="gender">{{
+            <v-list-item-title class="headline mb-4" v-model="gender">Gender: {{
               gender
             }}</v-list-item-title>
           </div>
@@ -29,19 +32,23 @@
           ></v-select>
         </v-list-item-content>
 
-        <v-avatar color="indigo">
+        <v-avatar class="ml-10" color="indigo">
           <v-icon dark>mdi-account-circle</v-icon>
         </v-avatar>
       </v-list-item>
 
       <v-card-actions>
-        <v-btn @click="editUser" color="primary" text
-          ><v-icon left>mdi-pencil</v-icon> Edit</v-btn
-        >
+        <v-btn @click="editUser" color="primary" text  v-if="isEditing"
+          ><v-icon left>mdi-pencil</v-icon> Edit</v-btn>
+
+          <v-btn @click="editUser" color="primary" text  v-else
+          ><v-icon left>mdi-pencil</v-icon> Save</v-btn>
         <v-btn color="error" text @click="deleteAccount"
           ><v-icon left>mdi-delete</v-icon> Delete</v-btn
         >
       </v-card-actions>
+      </v-col>
+      </v-row>
     </v-card>
   </div>
 </template>
@@ -77,7 +84,7 @@ export default {
 
   methods: {
     deleteAccount() {
-     // confirm("Do you want to delete your account? ");
+     
 
 swalWithBootstrapButtons.fire({
   title: 'Are you sure?',
@@ -103,7 +110,7 @@ swalWithBootstrapButtons.fire({
     swalWithBootstrapButtons.fire(
       'Cancelled',
       'Your profile is safe :)',
-      'error'
+      'success'
     )
   }
 })

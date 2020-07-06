@@ -11,6 +11,7 @@ import firebase from "../firebase/firebaseInit";
 import User from "../components/User"; 
 import UserSettings from "../components/user/UserSettings";
 import UserScheduler from "../components/user/userScheduler";
+import UserWelcome from "../components/user/UserWelcome";
 
 //ADMIN
 import Admin from "../components/Admin";
@@ -22,15 +23,12 @@ import MealPlansView from "../components/admin/MealPlansView";
 import AddMealPlan from "../components/admin/AddMealPlan";
 import Exercises from "../components/admin/ExerciseAdmin";
 import Stats from "../components/admin/Stats"
+import History from "../components/admin/History"
 
-
-//import store from "../store";
 
 Vue.use(Router);
 
-//Loggedin user from store
-//const loggedUser = store.state.entities.users.emailLoggedUser;
-//const loggedUser = store.state.entities.users;
+
 
 let router = new Router({
   mode: "history",
@@ -41,6 +39,7 @@ let router = new Router({
       component: Home,
       meta: {
         requiresGuest: true,
+        
       },
     },
     {
@@ -80,9 +79,15 @@ let router = new Router({
           name: "userspanel",
           beforeEnter: checkAdminRights,
           component: UsersPanel,
-          meta: {
-            requiresAuth: true,
-          },
+       
+         
+        },
+        {
+          path: 'history/:user_id',
+          name: 'history',
+          beforeEnter: checkAdminRights,
+          component: History,
+        
         },
         {
           path: "scheduler",
@@ -132,6 +137,7 @@ let router = new Router({
           },
           
         },
+        
         {
           path: "stats",
           name: "stats",
@@ -140,8 +146,9 @@ let router = new Router({
           meta: {
             requiresAuth: true,
           },
-          
+         
         },
+      
       ],
       meta: {
         requiresAuth: true,
@@ -156,6 +163,15 @@ let router = new Router({
         requiresAuth: true,
       },
       children: [
+        {
+          path: "welcome-user",
+          name: "welcome-user",
+          beforeEnter: checkUserRights,
+          component: UserWelcome,
+          meta: {
+            requiresAuth: true,
+          },
+        },
         {
           path: "settings",
           name: "usersettings",

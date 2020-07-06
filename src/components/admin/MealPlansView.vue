@@ -1,19 +1,19 @@
 <template>
   <v-container>
-    <v-container class=" mt-s4  mb-5 d-flex flex-row align-end justify-space-between ">
-    
-        <v-col cols="3" class="mt-12">
-            <v-row>
-         <h4>Search saved recepies</h4>
-      </v-row>
-          <v-text-field @keyup="searchOpt" v-model="search">
-            <v-icon slot="append" color="primary">mdi-magnify</v-icon>
-          </v-text-field>
-        </v-col>
-        <v-col cols="4">
-          <img width="200" :src="require('../../photos/diet2.svg')" alt="" />
-        </v-col>
- 
+    <v-container
+      class=" mt-s4  mb-5 d-flex flex-row align-end justify-space-between "
+    >
+      <v-col cols="3" class="mt-12">
+        <v-row>
+          <h4>Search saved recepies</h4>
+        </v-row>
+        <v-text-field @keyup="searchOpt" v-model="search">
+          <v-icon slot="append" color="primary">mdi-magnify</v-icon>
+        </v-text-field>
+      </v-col>
+      <v-col cols="4">
+        <img width="200" :src="require('../../photos/diet2.svg')" alt="" />
+      </v-col>
     </v-container>
 
     <v-row>
@@ -21,7 +21,7 @@
         <v-expansion-panel v-for="plans in displayMealPlans" :key="plans.id">
           <v-expansion-panel-header>{{ plans.name }} </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-template   class="d-flex flex-row justify-space-around">
+            <v-template class="d-flex flex-row justify-space-around">
               <v-card-subtitle>
                 Calories: {{ plans.calories }}
               </v-card-subtitle>
@@ -30,63 +30,69 @@
                 Carbohydrates: {{ plans.carbohydrates }}
               </v-card-subtitle>
               <v-card-subtitle> Protein: {{ plans.protein }} </v-card-subtitle>
-            <v-card-subtitle>
-              <v-dialog v-model="dialog" persistent max-width="600px">
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    depressed
-                    class="ml-6"
-                    v-on="on"
-                    small
-                    color="primary"
-                    @click="preEditBind(plans.name)"
-                    > <v-icon>mdi-pencil</v-icon></v-btn
-                  >
-                </template>
-                <v-form>
-                  <v-card>
-                    <v-card-title>
-                      <span class="headline">Change Name Of Selected Plan</span>
-                    </v-card-title>
-                    <v-card-text>
-                      <v-container>
-                        <v-row  justify="center"> 
-                          <v-col cols="8">
-                            <v-text-field
-                              type="text"
-                              label="Change Name*"
-                              v-model="nameChange"
-                              required
-                            ></v-text-field>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="dialog = false"
-                        >Close</v-btn
-                      >
-                      <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="editName(plans.id)"
-                        >Save</v-btn
-                      >
-                    </v-card-actions>
-                  </v-card>
-                </v-form>
-              </v-dialog>
-              <v-btn
-                depressed
-                class="ml-8"
-                small
-                color="error"
-                @click="deletePlan(plans.id)"
-                > <v-icon>mdi-delete</v-icon></v-btn
-              >
-                
-          </v-card-subtitle>
+              <v-card-subtitle>
+                <v-dialog v-model="dialog" persistent max-width="600px">
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      depressed
+                      class="ml-6"
+                      v-on="on"
+                      small
+                      color="primary"
+                      @click="preEditBind(plans.name)"
+                    >
+                      <v-icon>mdi-pencil</v-icon></v-btn
+                    >
+                  </template>
+                  <v-form>
+                    <v-card>
+                      <v-card-title>
+                        <span class="headline"
+                          >Change Name Of Selected Plan</span
+                        >
+                      </v-card-title>
+                      <v-card-text>
+                        <v-container>
+                          <v-row justify="center">
+                            <v-col cols="8">
+                              <v-text-field
+                                type="text"
+                                label="Change Name*"
+                                v-model="nameChange"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="dialog = false"
+                          >Close</v-btn
+                        >
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="editName(plans.id)"
+                          >Save</v-btn
+                        >
+                      </v-card-actions>
+                    </v-card>
+                  </v-form>
+                </v-dialog>
+                <v-btn
+                  depressed
+                  class="ml-8"
+                  small
+                  color="error"
+                  @click="deletePlan(plans.id)"
+                >
+                  <v-icon>mdi-delete</v-icon></v-btn
+                >
+              </v-card-subtitle>
             </v-template>
             <v-divider></v-divider>
             <v-row>
@@ -126,7 +132,7 @@
                 </v-col>
               </v-container>
             </v-row>
-  
+
             <v-divider></v-divider>
             <v-row>
               <v-container class="d-flex flex-row">
@@ -215,7 +221,7 @@
         :total-visible="7"
       ></v-pagination>
     </div>
-     <v-overlay :value="overlay">
+    <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
   </v-container>
@@ -225,8 +231,6 @@
 import MealPlans from "../../classes/MealPlans";
 export default {
   async beforeRouteEnter(to, from, next) {
-     
-
     await Promise.all([MealPlans.dispatch("getMealPlans")]).then(() => {
       next();
     });
@@ -246,31 +250,23 @@ export default {
       nameChange: "",
     };
   },
-  
-  mounted(){
-    setTimeout(()=>{
-      let vm  = this
-      vm.overlay = false
-    },1000)
-  },
   computed: {
     displayMealPlans() {
       //Create indexes for pagination & check for search
-      let offsetData = 0 ;
+      let offsetData = 0;
 
-        if(this.page == 1){
-
-            offsetData = 0
-        }else{
-          offsetData = ((this.page - 1) * this.perPage ) + 1
-        }
+      if (this.page == 1) {
+        offsetData = 0;
+      } else {
+        offsetData = (this.page - 1) * this.perPage + 1;
+      }
 
       if (this.getterSearch == "") {
         const allPlans = MealPlans.query().count() / this.perPage;
         this.pagTotal = Math.round(allPlans) + 1;
 
         let plans = MealPlans.query()
-            .orderBy("id")
+          .orderBy("id")
           .offset(offsetData)
           .limit(this.perPage)
           .get();
@@ -278,7 +274,7 @@ export default {
         return plans;
       } else {
         let queried = MealPlans.query()
-           .orderBy("name")
+          .orderBy("name")
           .search(this.getterSearch, {
             caseSensitive: false,
             threshold: 0.5,
@@ -286,7 +282,7 @@ export default {
           })
           .offset(0)
           .limit(this.perPage)
-          
+
           .get();
 
         const allPlansSearch = queried.length / this.perPage;
@@ -357,6 +353,11 @@ export default {
       this.getterSearch = this.search;
     },
   },
+  mounted() {
+    setTimeout(() => {
+      let vm = this;
+      vm.overlay = false;
+    }, 1000);
+  },
 };
 </script>
-

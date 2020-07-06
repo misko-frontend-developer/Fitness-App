@@ -4,6 +4,7 @@ export default {
   state: {
     perGender: null,
     perDone: null,
+
   },
   actions: {
 
@@ -38,7 +39,6 @@ export default {
 
           let obj = [done, notDone];
 
-          console.log(obj)
 
           commit("setDoneData", obj);
         });
@@ -55,7 +55,7 @@ export default {
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((element) => {
-            console.log(element.data());
+          
             data.push(element.data().gender);
           });
 
@@ -80,6 +80,8 @@ export default {
           commit("setGenderData", obj);
         });
     },
+
+ 
   },
   getters: {
     getGenderData: (state) => state.perGender,
@@ -88,5 +90,5 @@ export default {
   mutations: {
     setGenderData: (state, data) => (state.perGender = data),
     setDoneData: (state, data) => (state.perDone = data),
-  },
+   },
 };

@@ -31,56 +31,92 @@
                 </v-toolbar-items>
               </v-toolbar>
               <v-container>
-                <v-row justify="space-around">
-                  <v-col cols="3">
-                    <v-subheader>Choose User</v-subheader>
-                    <multiselect
-                      v-model="selectedUser"
-                      :options="availableUsers"
-                    ></multiselect>
-                    <div>{{ selectedUser }}</div>
+                <v-row>
+                  <v-row justify="space-around">
+                    <v-col>
+                      <v-subheader>Choose User</v-subheader>
+                      <multiselect
+                        v-model="selectedUser"
+                        :options="availableUsers"
+                      >
+                      </multiselect>
+                      User:
+                      <div>
+                        <v-chip class="m-1" color="primary" text-color="white">
+                          {{ selectedUser }}
+                          <v-icon right>mdi-contact</v-icon>
+                        </v-chip>
+                      </div>
+                    </v-col>
+                    <v-col>
+                      <v-subheader>Choose Intensity </v-subheader>
+                      <multiselect
+                        v-model="selectedIntensity"
+                        :options="availableIntesity"
+                      >
+                      </multiselect>
+                      Intensity:
+                      <div>
+                        <v-chip class="m-1" color="info" text-color="white">
+                          {{ selectedIntensity }}
+                          <v-icon right>mdi-chart-line</v-icon>
+                        </v-chip>
+                      </div>
+                    </v-col>
+                    <v-col>
+                      <v-subheader>Choose Meal Plan</v-subheader>
+                      <multiselect
+                        v-model="selectedMealPlan"
+                        :options="availableMealPlans"
+                      ></multiselect>
+                      Meal Plan:
+                      <div>
+                        <v-chip class="m-1" color="success" text-color="white">
+                          {{ selectedMealPlan }}
+                          <v-icon right>mdi-food</v-icon>
+                        </v-chip>
+                      </div>
+                    </v-col>
+                    <v-col>
+                      <v-subheader>Choose Excercises</v-subheader>
+                      <multiselect
+                        v-model="selectedExcercise"
+                        :options="availableExcercises"
+                        :multiple="true"
+                      ></multiselect>
+                      Exercises:
+                      <div v-for="exce in selectedExcercise" :key="exce.id">
+                        <v-chip class="m-1" color="primary" text-color="white">
+                          {{ exce }}
+                          <v-icon right>mdi-dumbbell</v-icon>
+                        </v-chip>
+                      </div>
+                    </v-col>
+                  </v-row>
+                  <v-row justify="space-between">
+                    <v-col class="">
+                      <v-subheader>Choose Date </v-subheader>
 
-                    <v-subheader>Choose Intensity </v-subheader>
-                    <multiselect
-                      v-model="selectedIntensity"
-                      :options="availableIntesity"
-                    ></multiselect>
-                    <div>{{ selectedIntensity }}</div>
-
-                    <v-subheader>Choose Meal Plan</v-subheader>
-                    <multiselect
-                      v-model="selectedMealPlan"
-                      :options="availableMealPlans"
-                    ></multiselect>
-                    <div>{{ selectedMealPlan }}</div>
-
-                    <v-subheader>Choose Excercises</v-subheader>
-                    <multiselect
-                      v-model="selectedExcercise"
-                      :options="availableExcercises"
-                      :multiple="true"
-                    ></multiselect>
-                    <div>{{ selectedExcercise }}</div>
-                    <v-subheader>Choose Color </v-subheader>
-                    <v-color-picker
-                      v-model="color"
-                      hide-inputs
-                      hide-mode-switch
-                    ></v-color-picker>
-                  </v-col>
-                  <v-col cols="7">
-                    <v-subheader>Choose Date </v-subheader>
-
-                    <v-date-picker
-                      v-model="dateTraining"
-                      full-width
-                      :landscape="$vuetify.breakpoint.smAndUp"
-                      class="mt-4"
-                    ></v-date-picker>
-                  </v-col>
+                      <v-date-picker
+                        v-model="dateTraining"
+                        full-width
+                        :landscape="$vuetify.breakpoint.smAndUp"
+                        class="mt-4"
+                      ></v-date-picker>
+                    </v-col>
+                    <v-col class="ml-6">
+                      <v-subheader>Choose Color </v-subheader>
+                      <v-color-picker
+                        v-model="color"
+                        hide-inputs
+                        hide-mode-switch
+                        class="mt-4 "
+                      >
+                      </v-color-picker>
+                    </v-col>
+                  </v-row>
                 </v-row>
               </v-container>
-              <v-row class="mx-5"> </v-row>
             </v-card>
           </v-dialog>
           <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
@@ -180,53 +216,93 @@
                   </v-toolbar>
                   <v-container>
                     <v-row justify="space-around">
-                      <v-col cols="3">
-                        <v-subheader>Choose User</v-subheader>
-                        <multiselect
-                          v-model="editSelectedUser"
-                          :options="availableUsers"
-                        ></multiselect>
-                        <div>{{ editSelectedUser }}</div>
-
-                        <v-subheader>Choose Intensity </v-subheader>
-                        <multiselect
-                          v-model="editSelectedIntensity"
-                          :options="availableIntesity"
-                        ></multiselect>
-                        <div>{{ editSelectedIntensity }}</div>
-
-                        <v-subheader>Choose Meal Plan</v-subheader>
-                        <multiselect
-                          v-model="editSelectedMealPlan"
-                          :options="availableMealPlans"
-                        ></multiselect>
-                        <div>{{ editSelectedMealPlan }}</div>
-
-                        <v-subheader>Choose Excercises</v-subheader>
-                        <multiselect
-                          v-model="editSelectedExcercise"
-                          :options="availableExcercises"
-                          :multiple="true"
-                        ></multiselect>
-                        <div>{{ editSelectedExcercise }}</div>
-                        <v-subheader>Choose Color </v-subheader>
-                        <v-color-picker
-                          v-model="editColor"
-                          hide-inputs
-                          hide-mode-switch
-                        ></v-color-picker>
-                      </v-col>
-                      <v-col cols="7">
-                        <v-row>
+                      <v-row>
+                        <v-col
+                          ><v-subheader>Choose User</v-subheader>
+                          <multiselect
+                            v-model="editSelectedUser"
+                            :options="availableUsers"
+                          ></multiselect>
+                          <div>
+                            <v-chip
+                              class="m-1"
+                              color="primary"
+                              text-color="white"
+                              >{{ editSelectedUser
+                              }}<v-icon right>mdi-contact</v-icon>
+                            </v-chip>
+                          </div></v-col
+                        >
+                        <v-col>
+                          <v-subheader>Choose Intensity </v-subheader>
+                          <multiselect
+                            v-model="editSelectedIntensity"
+                            :options="availableIntesity"
+                          ></multiselect>
+                          <div>
+                            <v-chip class="m-1" color="info" text-color="white"
+                              >{{ editSelectedIntensity
+                              }}<v-icon right>mdi-chart-line</v-icon>
+                            </v-chip>
+                          </div>
+                        </v-col>
+                        <v-col>
+                          <v-subheader>Choose Meal Plan</v-subheader>
+                          <multiselect
+                            v-model="editSelectedMealPlan"
+                            :options="availableMealPlans"
+                          ></multiselect>
+                          <div>
+                            <v-chip
+                              class="m-1"
+                              color="success"
+                              text-color="white"
+                              >{{ editSelectedMealPlan
+                              }}<v-icon right>mdi-food</v-icon>
+                            </v-chip>
+                          </div>
+                        </v-col>
+                        <v-col>
+                          <v-subheader>Choose Excercises</v-subheader>
+                          <multiselect
+                            v-model="editSelectedExcercise"
+                            :options="availableExcercises"
+                            :multiple="true"
+                          ></multiselect>
+                          <div
+                            v-for="exce in editSelectedExcercise"
+                            :key="exce.id"
+                          >
+                            <v-chip
+                              class="m-1"
+                              color="primary"
+                              text-color="white"
+                              >{{ exce }}<v-icon right>mdi-dumbbell</v-icon>
+                            </v-chip>
+                          </div>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                      
+                        <v-col>
                           <v-subheader class="mr-5">Choose Date </v-subheader>
-                        </v-row>
-                        <v-date-picker
-                          v-model="date2"
-                          full-width
-                          :landscape="$vuetify.breakpoint.smAndUp"
-                          class="mt-4"
-                        ></v-date-picker>
-                      </v-col>
+
+                          <v-date-picker
+                            v-model="date2"
+                            full-width
+                            :landscape="$vuetify.breakpoint.smAndUp"
+                            class="mt-4"
+                          ></v-date-picker>
+                        </v-col>
+                          <v-col class="mt-3 ml-6">
+                          <v-subheader>Choose Color </v-subheader>
+                          <v-color-picker
+                            v-model="editColor"
+                            hide-inputs
+                            hide-mode-switch
+                          ></v-color-picker>
+                        </v-col>
+                      </v-row>
                     </v-row>
                   </v-container>
                 </v-card>
@@ -279,11 +355,10 @@
         </v-menu>
       </v-sheet>
     </v-col>
-      <v-overlay :value="overlay">
+    <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
   </v-row>
-  
 </template>
 
 <script>
@@ -295,8 +370,6 @@ import Intensity from "../../classes/Intensity";
 
 export default {
   async beforeRouteEnter(to, from, next) {
-     
-
     await Promise.all([
       Intensity.dispatch("getIntensity"),
       Training.dispatch("getTrainings"),
@@ -340,7 +413,7 @@ export default {
     dateTraining: null,
 
     //Vuetify Calendar data
-    overlay : true,
+    overlay: true,
     dialogEdit: false,
     dialog: false,
     notifications: false,
@@ -371,10 +444,10 @@ export default {
   },
   mounted() {
     this.collectTrainings();
-      setTimeout(()=>{
-      let vm  = this
-      vm.overlay = false
-    },1000)
+    setTimeout(() => {
+      let vm = this;
+      vm.overlay = false;
+    }, 1000);
   },
 
   methods: {
@@ -461,6 +534,11 @@ export default {
           icon: "success",
           title: "New Training added",
         });
+
+        this.selectedMealPlan = null;
+        this.selectedIntensity = null;
+        this.selectedExcercise = null;
+        this.selectedUser = null;
       } else {
         Toast.fire({
           icon: "warning",
@@ -511,8 +589,8 @@ export default {
         let upDetails = {
           done: this.editDone,
           excercises: this.editSelectedExcercise,
-          intensity_id: this.editSelectedIntensity,
-          meal_plan_id: this.editSelectedMealPlan,
+          intensity: this.editSelectedIntensity,
+          mealplans: this.editSelectedMealPlan,
         };
 
         this.selectedEvent.details = upDetails;
@@ -566,15 +644,7 @@ export default {
     collectTrainings() {
       let trainings = Training.all();
       let newArray = [];
-      
-      trainings.forEach((training)=>{
-        
-       
-               
-       
-      })
-
-          let doneData;
+      let doneData;
 
       trainings.forEach((training) => {
         let excerArray = [];
@@ -592,16 +662,12 @@ export default {
           .forEach((element) => {
             intesArray.push(`${element.name} - [${element.id}]`);
           });
-      
-             let user_name = User.query()
-              .where("user_id", training.details.user_id)
-              .get()
-             
-     
 
+        let user_name = User.query()
+          .where("user_id", training.details.user_id)
+          .get();
 
-      
-     let obj = {
+        let obj = {
           id: training.id,
           name: user_name[0].name + ` [${training.details.user_id}]`,
           color: training.color,
@@ -619,12 +685,9 @@ export default {
         };
 
         newArray.push(obj);
-      }); 
-
- 
+      });
 
       this.events = newArray;
- 
     },
     viewDay({ date }) {
       this.focus = date;

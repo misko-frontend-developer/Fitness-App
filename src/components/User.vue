@@ -1,5 +1,6 @@
 <template>
   <v-app id="inspire">
+     
     <v-navigation-drawer
       v-model="drawer"
       :clipped="$vuetify.breakpoint.lgAndUp"
@@ -70,7 +71,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
       </v-toolbar-title>
-
+      
       <v-spacer></v-spacer>
       Logout
       <v-btn icon @click="logout">
@@ -79,18 +80,19 @@
     </v-app-bar>
     <v-content>
       <v-container fluid>
+       
         <router-view :key="$route.fullPath" />
       </v-container>
     </v-content>
 
     <v-dialog v-model="dialog" width="800px"> </v-dialog>
-    <Alert />
+    
   </v-app>
 </template>
 
 <script>
 import firebase from "../firebase/firebaseInit";
-
+import WelcomeUser from "./user/UserWelcome";
 export default {
   methods: {
     logout: function() {
@@ -102,6 +104,9 @@ export default {
         });
     },
   },
+  components:{
+    WelcomeUser
+  },
   props: {
     source: String,
   },
@@ -109,7 +114,7 @@ export default {
     dialog: false,
     drawer: null,
     items: [
-      { icon: "mdi-home", text: "Home", link: "/user" },
+      { icon: "mdi-home", text: "Home", link: "/user/welcome-user" },
      
         {
         icon: "mdi-calendar",
@@ -117,7 +122,7 @@ export default {
         link: "/user/calendar",
       },
        {
-        icon: "mdi-brightness-5",
+        icon: "mdi-settings-box",
         text: "Profile Settings",
         link: "/user/settings",
       },
